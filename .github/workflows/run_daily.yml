@@ -1,0 +1,62 @@
+name: Get Daily
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0,13 * * *"
+
+env:
+  GITHUB_NAME: yihong0618
+  GITHUB_EMAIL: zouzou0208@gmail.com
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: My GitHub Status
+        uses: yihong0618/github-readme-stats@main
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Configure pip cache
+        uses: actions/cache@v1
+        id: pip-cache
+        with:
+          path: venv
+          key: pip-1-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            pip-
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        if: steps.pip-cache.outputs.cache-hit != 'true'
+
+      # python main.py ${{ secrets.G_T }} ${{ github.repository }} for gitblog TODO refator later
+      - name: Generate new daily
+        run: |
+          source venv/bin/activate
+          python get_daily.py ${{ secrets.G_T }} ${{ github.repository }} ${{ secrets.CICHANG_USER_NAME }} ${{ secrets.CICHANG_PASSWORD }} ${{ secrets.FORST_EMAIL }} ${{ secrets.FORST_PASSWORD }} 
+          python main.py ${{ secrets.G_T }} ${{ github.repository }} 
+
+      # Fix for the unsafe repo error: https://github.com/repo-sync/pull-request/issues/84
+      - name: Run safe dir
+        run: |
+          git config --global --add safe.directory /github/workspace
+      - name: Push README
+        run: |
+          git config --local user.name yihong0618
+          git config --local user.email zouzou0208@gmail.com
+          git add .
+          git commit -m "new daily stats" || echo "no file change"
+          git push || echo "no need push"
