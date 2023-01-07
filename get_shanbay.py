@@ -4,10 +4,11 @@ import pendulum
 
 from github import Github
 
-# the shanbay issue index is 12
-GET_UP_ISSUE_NUMBER = 12
+# set up your shanbay issue index
+GET_UP_ISSUE_NUMBER =
 # update your own shanbay user_name
-SHANBAY_USERNAME = "zlurjj"
+SHANBAY_USERNAME =
+
 SHANBAY_API = f"https://apiv3.shanbay.com/uc/checkin/logs?user_id={SHANBAY_USERNAME}&ipp=10&page=1"
 SHANBAY_RECORD_MESSAGE = (
     "打卡日期 {learn_date}\r\n学习 {used_minutes} 分钟，背单词 {num} 个"
