@@ -43,7 +43,7 @@ class Forst:
         date = str(self.year) + "-01-01"
         r = self.s.get(FOREST_CLAENDAR_URL.format(date=date, user_id=self.user_id))
         if not r.ok:
-            raise LoadError(f"Someting is wrong to get data-- {r.text}")
+            raise Exception(f"Someting is wrong to get data-- {r.text}")
         self.plants = r.json()["plants"]
         # only count success trees
         self.plants = [i for i in self.plants if i["is_success"]]

@@ -6,7 +6,7 @@ from .from_issues import get_info_from_issue_comments
 from .shanbay import get_shanbay_daily
 
 MY_STATUS_DICT_FROM_API = {
-    "番茄": {"daily_func": get_forst_daily, "url": "", "unit_str": " (个)"},
+    "番茄": {"daily_func": get_forst_daily, "url": "https://github.com/yihong0618/2023/issues/8", "unit_str": " (个)"},
 }
 
 MY_STATUS_DICT_FROM_COMMENTS = {
