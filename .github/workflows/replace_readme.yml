@@ -12,6 +12,8 @@ on:
 env:
   GITHUB_NAME: yihong0618
   GITHUB_EMAIL: zouzou0208@gmail.com
+  BOOKMARK_ISSUE_ID: 4
+
 
 jobs:
   sync:
@@ -43,12 +45,12 @@ jobs:
         run: |
           source venv/bin/activate
           python main.py ${{ secrets.G_T }} ${{ github.repository }} --issue_numbe '${{ github.event.issue.number }}' --issue_label_name '${{ github.event.issue.labels[0].name }}' 
-        if: ${{ github.event.issue.number }} != ${{ env.BOOKMARK_ISSUE_ID }}
-      - name: Replace README
+        if: '${{ github.event.issue.number }}' != '${{ env.BOOKMARK_ISSUE_ID }}'
+      - name: Make bookmark
         run: |
           source venv/bin/activate
           python make_bookmark.py ${{ secrets.G_T }} ${{ github.repository }}
-        if: ${{ github.event.issue.number }} == ${{ env.BOOKMARK_ISSUE_ID }}
+        if: '${{ github.event.issue.number }}' == '${{ env.BOOKMARK_ISSUE_ID }}'
       - name: Push README
         run: |
           git config --local user.email "action@github.com"
