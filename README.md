@@ -136,6 +136,10 @@
 ## 读书
 
 <!--START_SECTION:my_read-->
+| Name | Start | Update | 
+ | ---- | ---- | ---- | 
+| [《幽游白书》](https://github.com/yihong0618/2023/issues/6#issuecomment-1397982775) | 2023-01-20 | 2023-01-20 | 
+
 <!--END_SECTION:my_read-->
 
 
