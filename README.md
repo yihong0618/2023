@@ -142,6 +142,10 @@
 ## 刷剧
 
 <!--START_SECTION:my_drama-->
+| Name | Start | Update | 
+ | ---- | ---- | ---- | 
+| [《三体》](https://github.com/yihong0618/2023/issues/7#issuecomment-1397966024) | 2023-01-20 | 2023-01-20 | 
+
 <!--END_SECTION:my_drama-->
 
 
