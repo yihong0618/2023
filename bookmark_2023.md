@@ -8,3 +8,4 @@
 | [时间管理](https://evantravers.com/articles/2022/06/30/dating-other-task-managers/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1386644993 | 2023-01-18 | 2023-01-18 | False |
 | [电子书：](https://zebra.9farm.com/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1396617823 | 2023-01-19 | 2023-01-19 | False |
 | [ML](https://www.youtube.com/watch?v=PaCmpygFfXo&t=129) | https://github.com/yihong0618/2023/issues/4#issuecomment-1397979592 | 2023-01-20 | 2023-01-20 | False |
+| [ebpf]([ttps://www.kawabangga.com/posts/4894](https://www.kawabangga.com/posts/4894)) | https://github.com/yihong0618/2023/issues/4#issuecomment-1397988556 | 2023-01-20 | 2023-01-20 | False |
