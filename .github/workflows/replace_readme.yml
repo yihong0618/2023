@@ -12,6 +12,7 @@ on:
 env:
   GITHUB_NAME: yihong0618
   GITHUB_EMAIL: zouzou0208@gmail.com
+  BOOKMARK_ISSUE_ID: 4
 
 jobs:
   sync:
@@ -43,15 +44,21 @@ jobs:
         run: |
           source venv/bin/activate
           python main.py ${{ secrets.G_T }} ${{ github.repository }} --issue_numbe '${{ github.event.issue.number }}' --issue_label_name '${{ github.event.issue.labels[0].name }}' 
-        if: ${{ github.event.issue.number }} != ${{ env.BOOKMARK_ISSUE_ID }}
+        if: '${{ github.event.issue.number }}' != '${{ env.BOOKMARK_ISSUE_ID }}'
+      - name: Make bookmark
+        run: |
+          source venv/bin/activate
+          python make_bookmark.py ${{ secrets.G_T }} ${{ github.repository }} 
+        if: '${{ github.event.issue.number }}' == '${{ env.BOOKMARK_ISSUE_ID }}'
+      
       # Fix for the unsafe repo error: https://github.com/repo-sync/pull-request/issues/84
       - name: Run safe dir
         run: |
           git config --global --add safe.directory /github/workspace
       - name: Push README
         run: |
-          git config --local user.name yihong0618
-          git config --local user.email zouzou0208@gmail.com
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add .
           git commit -m "generated readme" || echo "no need to commit "
           git push || echo "no file change"
