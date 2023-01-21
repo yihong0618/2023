@@ -141,6 +141,7 @@
 | Name | Start | Update | 
  | ---- | ---- | ---- | 
 | [《幽游白书》](https://github.com/yihong0618/2023/issues/6#issuecomment-1397982775) | 2023-01-20 | 2023-01-20 | 
+| [《生吞》](https://github.com/yihong0618/2023/issues/6#issuecomment-1399222301) | 2023-01-21 | 2023-01-21 | 
 
 <!--END_SECTION:my_read-->
 
