@@ -160,6 +160,10 @@
 ## 观影
 
 <!--START_SECTION:my_movie-->
+| Name | Start | Update | 
+ | ---- | ---- | ---- | 
+| [《满江红》](https://github.com/yihong0618/2023/issues/9#issuecomment-1399883370) | 2023-01-23 | 2023-01-23 | 
+
 <!--END_SECTION:my_movie-->
 
 ## 刷番
