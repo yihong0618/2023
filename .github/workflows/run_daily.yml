@@ -18,13 +18,12 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
-          
-      - name: Test
-        run: |
-           echo ${GITHUB_TOKEN}
 
       - name: My GitHub Status
         uses: yihong0618/github-readme-stats@main
+        with:
+          # we need set GITHUB_TOKEN
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v1
