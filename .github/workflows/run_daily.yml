@@ -22,7 +22,7 @@ jobs:
       - name: My GitHub Status
         uses: yihong0618/github-readme-stats@main
         with:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         GH_TOKEN: ${{ secrets.G_T }}
 
       - name: Set up Python
         uses: actions/setup-python@v1
