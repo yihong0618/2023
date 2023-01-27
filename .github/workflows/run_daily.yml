@@ -18,6 +18,10 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
+          
+      - name: Test
+        run: |
+           echo ${GITHUB_TOKEN}
 
       - name: My GitHub Status
         uses: yihong0618/github-readme-stats@main
