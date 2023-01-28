@@ -7,7 +7,7 @@ on:
         description: 'Test'
         required: false
   issue_comment:
-    types: [created, edited]
+    types: [created]
 
 env:
   GITHUB_NAME: yihong0618
