@@ -23,6 +23,7 @@ jobs:
         uses: yihong0618/github-readme-stats@main
         with:
          GH_TOKEN: "${{ secrets.G_T }}"
+         WITH_STARED: false
 
       - name: Set up Python
         uses: actions/setup-python@v1
