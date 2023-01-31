@@ -181,5 +181,4 @@
 | ------- | ------- | ---- | ---- |
 | [niyue](https://niyue.com/) | 2022.01.20 | 第一个 | 写 20 年博客的前辈 |
 | [Ryo](https://fanlv.fun/archives/) | 2022.01.29 | 底层 | 字节跳动 |
-
-
+| [baotiao](http://baotiao.github.io/) | 2022.01.31 | 数据库 | 做有积累的事情 |
