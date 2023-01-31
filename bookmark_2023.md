@@ -12,3 +12,4 @@
 | [postgres](锁：) | https://github.com/yihong0618/2023/issues/4#issuecomment-1404699760 | 2023-01-26 | 2023-01-26 | False |
 | [进程](https://www.higuoxing.com/archives/process-sync/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1407260330 | 2023-01-28 | 2023-01-28 | False |
 | [pgquery](https://gist.github.com/rgreenjr/3637525) | https://github.com/yihong0618/2023/issues/4#issuecomment-1407260591 | 2023-01-28 | 2023-01-28 | False |
+| [编译](https://notes.eatonphil.com/2023-01-30-livescheme.html) | https://github.com/yihong0618/2023/issues/4#issuecomment-1409802775 | 2023-01-31 | 2023-01-31 | False |
