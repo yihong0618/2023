@@ -39,15 +39,20 @@ async fn make_new_issue(opts: GetUpOpts) -> Result<()> {
         .send()
         .await?;
     let comment = comments.items.last();
-    if !comment.is_none()  {
-        dbg!(comment.unwrap().body.borrow());
-        let tz = chrono::FixedOffset::east_opt(3600*8).unwrap();
-        let today = Utc::now().with_timezone(&tz).date_naive();
+    let tz = chrono::FixedOffset::east_opt(3600*8).unwrap();
+    let today = Utc::now().with_timezone(&tz);
+    if comment.is_none() {
+        sentence = "今天的起床时间是：".to_string() + &today.to_string() + "\r\n\r\n" + &sentence;
+        octocrab::instance()
+            .issues(owner, repo)
+            .create_comment(GET_UP_ISSUE_NUMBER, sentence)
+            .await?; 
+    } else {
         let get_up_time = comment.unwrap().created_at.borrow().with_timezone(&tz);
         let last_issue_day = get_up_time.date_naive();
         let get_up_hour = get_up_time.hour();
-        if today.to_string() != last_issue_day.to_string() && get_up_hour >=5 && get_up_hour <= 24 {
-            sentence = "今天的起床时间是：".to_string() + &get_up_time.to_string() + "\r\n\r\n" + &sentence;
+        if today.date_naive().to_string() != last_issue_day.to_string() && get_up_hour >=5 && get_up_hour <= 24 {
+            sentence = "今天的起床时间是：".to_string() + &today.to_string() + "\r\n\r\n" + &sentence;
             octocrab::instance()
                 .issues(owner, repo)
                 .create_comment(GET_UP_ISSUE_NUMBER, sentence)
