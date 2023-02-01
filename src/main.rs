@@ -1,13 +1,16 @@
+use std::borrow::Borrow;
+
 use anyhow::Result;
+use chrono::{self, Timelike};
+use chrono::prelude::*;
+use clap::{Args, Parser};
+use octocrab::OctocrabBuilder;
 use serde::Deserialize;
-use clap::{Parser, Args};
 
 static DEFAULT_SENTENCE: &str =
     "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n";
 
-fn get_input() -> String {
-    return "hello world".to_string();
-}
+static GET_UP_ISSUE_NUMBER: u64 = 12u64;
 
 #[derive(Debug, Deserialize)]
 struct SentenceResponse {
@@ -20,33 +23,58 @@ async fn get_one_sentence() -> Result<String> {
     Ok(resp.content)
 }
 
+async fn make_new_issue(opts: GetUpOpts) -> Result<()> {
+    let mut sentence = get_one_sentence()
+        .await
+        .unwrap_or(DEFAULT_SENTENCE.to_string());
+    let mut s = opts.repo_name.split("/");
+    let owner = s.next().unwrap_or_default();
+    let repo = s.next().unwrap_or_default();
+
+    octocrab::initialise(OctocrabBuilder::new().personal_token(opts.github_token.to_string()))?;
+    // TODO comments maybe upper than 100 need page
+    let comments = octocrab::instance()
+        .issues(owner, repo)
+        .list_comments(GET_UP_ISSUE_NUMBER)
+        .send()
+        .await?;
+    let comment = comments.items.last();
+    if !comment.is_none()  {
+        dbg!(comment.unwrap().body.borrow());
+        let tz = chrono::FixedOffset::east_opt(3600*8).unwrap();
+        let today = Utc::now().with_timezone(&tz).date_naive();
+        let get_up_time = comment.unwrap().created_at.borrow().with_timezone(&tz);
+        let last_issue_day = get_up_time.date_naive();
+        let get_up_hour = get_up_time.hour();
+        if today.to_string() != last_issue_day.to_string() && get_up_hour >=5 && get_up_hour <= 24 {
+            sentence = "今天的起床时间是：".to_string() + &get_up_time.to_string() + "\r\n\r\n" + &sentence;
+            octocrab::instance()
+                .issues(owner, repo)
+                .create_comment(GET_UP_ISSUE_NUMBER, sentence)
+                .await?;
+        }
+    }
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let app_opts = AppOpts::parse();
     match app_opts {
         AppOpts::GetUp(get_up_opts) => {
-            get_up(get_up_opts).await
+            make_new_issue(get_up_opts).await?;
         }
     }
-    
-}
-
-async fn get_up(opts: GetUpOpts) -> Result<()> {
-    let sentence = get_one_sentence()
-    .await
-    .unwrap_or(DEFAULT_SENTENCE.to_string());
-    dbg!(sentence);
     Ok(())
 }
 
-
-#[derive(Debug, Parser)]
+#[derive(Debug, Parser, Clone)]
 #[clap(about, version, author)]
 enum AppOpts {
-    GetUp(GetUpOpts)
+    GetUp(GetUpOpts),
 }
 
-#[derive(Debug, Args)]
+#[derive(Debug, Args, Clone)]
 struct GetUpOpts {
     github_token: String,
     repo_name: String,
@@ -56,5 +84,5 @@ struct GetUpOpts {
     /// telegram bot token
     tele_token: Option<String>,
     /// telegram chat id
-    tele_chat_id: Option<String>
+    tele_chat_id: Option<String>,
 }
