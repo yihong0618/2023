@@ -10,7 +10,7 @@ use serde::Deserialize;
 static DEFAULT_SENTENCE: &str =
     "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n";
 
-static GET_UP_ISSUE_NUMBER: u64 = 13u64;
+static GET_UP_ISSUE_NUMBER: u64 = 12u64;
 
 #[derive(Debug, Deserialize)]
 struct SentenceResponse {
@@ -26,9 +26,10 @@ async fn get_one_sentence() -> Result<String> {
 fn make_get_up_message(weather: Option<String>, date: String, sentence: String) -> Result<String> {
     Ok("今天的起床时间是：".to_string()
         + "\r\n"
-        + &weather.unwrap_or_default().to_string()
-        + "\r\n"
         + &date
+        + "\r\n"
+        + &"天气：".to_string()
+        + &weather.unwrap_or_default().to_string()
         + "\r\n\r\n"
         + &sentence)
 }
