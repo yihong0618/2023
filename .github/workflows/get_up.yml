@@ -27,4 +27,5 @@ jobs:
 
       - name: GET UP
         run: |
-          cargo run get-up ${{ secrets.G_T }} ${{ github.repository }}
+          cargo run get-up ${{ secrets.G_T }} ${{ github.repository }} '${{ github.event.inputs.message }}'
+
