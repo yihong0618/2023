@@ -185,5 +185,3 @@
 | [baotiao](http://baotiao.github.io/) | 2022.01.31 | 数据库 | 做有积累的事情 |
 | [javabin](http://javabin.cn/archives/) | 2022.02.03 | hacker | 好 cool 的人 |
 
-| [用 eBPF trace PostgreSQL 的几种姿势](https://github.com/yihong0618/gitblog/issues/257) | 2023-01-28 | 2023-01-28 | 3 | r嗯
-| [用 eBPF trace PostgreSQL 的几种姿势](https://github.com/yihong0618/gitblog/issues/257) | 2023-01-28 | 2023-01-28 | 3 | 
