@@ -7,7 +7,7 @@ import pendulum
 import requests
 from github import Github
 
-from .config import (
+from config import (
     FOREST_CLAENDAR_URL,
     FOREST_ISSUE_NUMBER,
     FOREST_LOGIN_URL,
@@ -113,7 +113,7 @@ class Forst:
         yesterday_plants = [
             i
             for i in self.plants
-            if pendulum.parse(i["created_at"], tz=TIMEZONE).to_date_string()
+            if pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
             == yesterday.to_date_string()
         ]
         yesterday_body = self.make_table_body(
@@ -122,7 +122,7 @@ class Forst:
         today_plants = [
             i
             for i in self.plants
-            if pendulum.parse(i["created_at"], tz=TIMEZONE).to_date_string()
+            if pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
             == today.to_date_string()
         ]
         today_body = self.make_table_body(today_plants, today.to_date_string())
@@ -133,7 +133,7 @@ class Forst:
         else:
             latest_comment = comments[-1]
             latest_day = pendulum.instance(latest_comment.created_at).in_timezone(
-                "Asia/Shanghai"
+                TIMEZONE
             )
             is_today = (latest_day.day == today.day) and (
                 latest_day.month == today.month
@@ -155,7 +155,7 @@ class Forst:
         self.make_year_stats()
         log_days = set(
             [
-                pendulum.parse(i["created_at"], tz=TIMEZONE).to_date_string()
+                pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
                 for i in self.plants
             ]
         )
