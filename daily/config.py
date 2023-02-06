@@ -103,5 +103,5 @@ MONTH_SUMMARY_STAT_TEMPLATE = "| {month} | {number} |\n"
 ##### Forest Summary ######
 FOREST_SUMMARY_HEAD = "| Tag | Times | \n | ---- | ---- | \n"
 FOREST_SUMMARY_STAT_TEMPLATE = "| {tag} | {times} |\n"
-FOREST_ISSUE_NUMBER = 8
- 
+FOREST_ISSUE_NUMBER = 14
+TIMEZONE = "Asia/Shanghai"

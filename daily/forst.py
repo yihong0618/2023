@@ -14,7 +14,7 @@ from .config import (
     FOREST_SUMMARY_HEAD,
     FOREST_SUMMARY_STAT_TEMPLATE,
     FOREST_TAG_URL,
-    FOREST_URL_HEAD,
+    TIMEZONE,
 )
 
 
@@ -29,6 +29,7 @@ class Forst:
         self.log_days = []
         self.success_plants_count = 0
         self.is_login = False
+        self.issue = None
 
     def login(self):
         data = {"session": {"email": self.email, "password": self.password}}
@@ -47,7 +48,6 @@ class Forst:
         self.plants = r.json()["plants"]
         # only count success trees
         self.plants = [i for i in self.plants if i["is_success"]]
-        self._make_forest_dict()
 
     def _get_my_tags(self):
         r = self.s.get(FOREST_TAG_URL.format(user_id=self.user_id))
@@ -64,12 +64,12 @@ class Forst:
             raise Exception("Please login first")
         self.make_plants_data()
 
-    def _make_forest_dict(self):
+    def _make_forest_dict(self, plants):
         if not self.plants:
             self.make_plants_data()
         tags_dict = self._get_my_tags()
         d = Counter()
-        for p in self.plants:
+        for p in plants:
             d[tags_dict[p.get("tag")]] += 1
         return d
 
@@ -80,31 +80,86 @@ class Forst:
             s += FOREST_SUMMARY_STAT_TEMPLATE.format(tag=k, times=str(v) + f" {unit}")
         return s
 
-    def make_new_table(self, token, repo_name, issue_number=FOREST_ISSUE_NUMBER):
-        u = Github(token)
-        issue = u.get_repo(repo_name).get_issue(FOREST_ISSUE_NUMBER)
+    def make_table_body(self, plants, date_str=""):
         unit = "个"
         body = ""
-        tag_summary_dict = self._make_forest_dict()
-        for b in issue.body.splitlines():
+        tag_summary_dict = self._make_forest_dict(plants)
+        for b in self.issue.body.splitlines():
             if b.startswith("|"):
                 break
             body += b
-        body = body + "\r\n" + self._make_tag_summary_str(tag_summary_dict, unit)
-        issue.edit(body=body)
+        if date_str:
+            body = (
+                f"{date_str}的 Forst 番茄时间汇总"
+                + "\r\n"
+                + self._make_tag_summary_str(tag_summary_dict, unit)
+            )
+        else:
+            body = body + "\r\n" + self._make_tag_summary_str(tag_summary_dict, unit)
+        return body
+
+    def make_new_table(self, token, repo_name, issue_number=FOREST_ISSUE_NUMBER):
+        u = Github(token)
+        self.issue = u.get_repo(repo_name).get_issue(issue_number)
+        self.make_plants_data()
+        plants = self.plants
+        body = self.make_table_body(plants)
+        self.issue.edit(body=body)
+
+    def make_daily_table(self):
+        comments = list(self.issue.get_comments())
+        yesterday = pendulum.now(TIMEZONE).subtract(days=1)
+        today = pendulum.now(TIMEZONE)
+        yesterday_plants = [
+            i
+            for i in self.plants
+            if pendulum.parse(i["created_at"], tz=TIMEZONE).to_date_string()
+            == yesterday.to_date_string()
+        ]
+        yesterday_body = self.make_table_body(
+            yesterday_plants, yesterday.to_date_string()
+        )
+        today_plants = [
+            i
+            for i in self.plants
+            if pendulum.parse(i["created_at"], tz=TIMEZONE).to_date_string()
+            == today.to_date_string()
+        ]
+        today_body = self.make_table_body(today_plants, today.to_date_string())
+        if not comments:
+            # yesterday
+            if yesterday_plants:
+                self.issue.create_comment(body=yesterday_body)
+        else:
+            latest_comment = comments[-1]
+            latest_day = pendulum.instance(latest_comment.created_at).in_timezone(
+                "Asia/Shanghai"
+            )
+            is_today = (latest_day.day == today.day) and (
+                latest_day.month == today.month
+            )
+            is_yesterday = (latest_day.day == yesterday.day) and (
+                latest_day.month == yesterday.month
+            )
+            if is_yesterday:
+                latest_comment.edit(body=yesterday_body)
+            else:
+                if is_today:
+                    latest_comment.edit(body=today_body)
+                else:
+                    self.issue.create_comment(body=today_body)
 
     def make_forst_daily(self):
-        end_date = pendulum.now("Asia/Shanghai")
+        end_date = pendulum.now(TIMEZONE)
         start_date = end_date.start_of("year")
         self.make_year_stats()
         log_days = set(
             [
-                pendulum.parse(i["created_at"], tz="Asia/Shanghai").to_date_string()
+                pendulum.parse(i["created_at"], tz=TIMEZONE).to_date_string()
                 for i in self.plants
             ]
         )
         self.log_days = sorted(list(log_days))
-        total_plants = len(self.plants)
         is_today_check = False
         if end_date.to_date_string() in self.log_days:
             is_today_check = True
@@ -130,6 +185,7 @@ def get_forst_daily(email, password, github_token, repo_name):
     f.login()
     # also edit the issue body
     f.make_new_table(github_token, repo_name)
+    f.make_daily_table()
     return f.make_forst_daily()
 
 
@@ -142,5 +198,5 @@ if __name__ == "__main__":
     options = parser.parse_args()
     f = Forst(options.email, options.password)
     f.login()
-    f._make_forest_dict()
-    print(f.make_new_table(options.github_token, options.repo_name))
+    f.make_new_table(options.github_token, options.repo_name)
+    f.make_daily_table()
