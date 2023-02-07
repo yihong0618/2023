@@ -10,9 +10,7 @@ GET_UP_ISSUE_NUMBER = ""
 SHANBAY_USERNAME = ""
 
 SHANBAY_API = f"https://apiv3.shanbay.com/uc/checkin/logs?user_id={SHANBAY_USERNAME}&ipp=10&page=1"
-SHANBAY_RECORD_MESSAGE = (
-    "打卡日期 {learn_date}\r\n学习 {used_minutes} 分钟，背单词 {num} 个"
-)
+SHANBAY_RECORD_MESSAGE = "打卡日期 {learn_date}\r\n学习 {used_minutes} 分钟，背单词 {num} 个"
 DEFAULT_RECORD = "获取扇贝记录出错啦，检查检查代码吧"
 
 TIMEZONE = "Asia/Shanghai"
@@ -54,9 +52,7 @@ def get_latest_record():
                 used_minutes, s = divmod(used_time, 60)
 
                 return SHANBAY_RECORD_MESSAGE.format(
-                    learn_date=learn_date,
-                    used_minutes=used_minutes,
-                    num=num
+                    learn_date=learn_date, used_minutes=used_minutes, num=num
                 )
     except:
         print("get SHANBAY_API wrong")

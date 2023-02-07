@@ -74,7 +74,7 @@ class Forst:
         for t in tag_list:
             tag_dict[t["tag_id"]] = t["title"]
         return tag_dict
-    
+
     # make forst tag like "代码" "日语" as key
     def _make_forest_dict(self, plants):
         if not self.plants:
@@ -127,12 +127,11 @@ class Forst:
             for i in self.plants
             if pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
             == day.to_date_string()
-        ] 
+        ]
         if not plants:
             # if not plants we return empty string
             return ""
         return self.make_table_body(plants, day.to_date_string())
-        
 
     def make_daily_table(self):
         comments = list(self.issue.get_comments())

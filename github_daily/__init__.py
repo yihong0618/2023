@@ -4,6 +4,8 @@ from .duolingo import get_duolingo_daily
 from .forst import get_forst_daily
 from .from_issues import get_info_from_issue_comments
 from .shanbay import get_shanbay_daily
+from .cli import main
+
 
 MY_STATUS_DICT_FROM_API = {
     "番茄": {

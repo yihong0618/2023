@@ -1,3 +1,5 @@
+# if you are not me change here
+REPO_NAME = "yihong0618/2023"
 COOK_LABEL_LIST = [
     "Cook",
 ]
@@ -40,6 +42,7 @@ SQUAT_LABEL_LIST = [
     "Squat",
 ]
 
+# if you are not me change here
 MY_BLOG_REPO = "yihong0618/gitblog"
 GITHUB_README_COMMENTS = (
     "(<!--START_SECTION:{name}-->\n)(.*)(<!--END_SECTION:{name}-->\n)"
@@ -61,14 +64,15 @@ MY_SHANBAY_USER_NAME = "ufewz"
 SHANBAY_CALENDAR_API = "https://apiv3.shanbay.com/uc/checkin/calendar/dates/?user_id={user_name}&start_date={start_date}&end_date={end_date}"
 MY_SHANBAY_URL = f"https://web.shanbay.com/web/users/{MY_SHANBAY_USER_NAME}/zone"
 
+# if you are not me change here
 ##### DUO ######
 MY_DUOLINGO_URL = "https://www.duolingo.com/profile/yihong0618"
 
+# if you are not me change here
 ##### CICHANG ######
 MY_CICHANG_URL = "https://twitter.com/yihong06181/status/1359040099107897344?s=20"
 
 ##### FORST ######
-
 FOREST_URL_HEAD = "https://forest-china.upwardsware.com"
 FOREST_LOGIN_URL = FOREST_URL_HEAD + "/api/v1/sessions"
 FOREST_CLAENDAR_URL = (
