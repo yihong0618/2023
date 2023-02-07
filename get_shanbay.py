@@ -5,9 +5,9 @@ import pendulum
 from github import Github
 
 # set up your shanbay issue index
-GET_UP_ISSUE_NUMBER =
+GET_UP_ISSUE_NUMBER = ""
 # update your own shanbay user_name
-SHANBAY_USERNAME =
+SHANBAY_USERNAME = ""
 
 SHANBAY_API = f"https://apiv3.shanbay.com/uc/checkin/logs?user_id={SHANBAY_USERNAME}&ipp=10&page=1"
 SHANBAY_RECORD_MESSAGE = (
@@ -87,4 +87,3 @@ if __name__ == "__main__":
         options.github_token,
         options.repo_name,
     )
-

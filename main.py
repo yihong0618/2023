@@ -4,8 +4,8 @@ from datetime import datetime
 
 from github import Github
 
-from daily.config import LABEL_DICT, MY_BLOG_REPO
-from daily.utils import (
+from github_daily.config import LABEL_DICT, MY_BLOG_REPO
+from github_daily.utils import (
     make_base_issues_comments_str,
     make_blog_issues_str,
     make_cook_issue_table,
