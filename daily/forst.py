@@ -7,21 +7,35 @@ import pendulum
 import requests
 from github import Github
 
-from .config import (
-    FOREST_CLAENDAR_URL,
-    FOREST_ISSUE_NUMBER,
-    FOREST_LOGIN_URL,
-    FOREST_SUMMARY_HEAD,
-    FOREST_SUMMARY_STAT_TEMPLATE,
-    FOREST_TAG_URL,
-    TIMEZONE,
-)
+if __name__ == "__main__":
+    from config import (
+        FOREST_CLAENDAR_URL,
+        FOREST_ISSUE_NUMBER,
+        FOREST_LOGIN_URL,
+        FOREST_SUMMARY_HEAD,
+        FOREST_SUMMARY_STAT_TEMPLATE,
+        FOREST_TAG_URL,
+        TIMEZONE,
+    )
+
+else:
+    from .config import (
+        FOREST_CLAENDAR_URL,
+        FOREST_ISSUE_NUMBER,
+        FOREST_LOGIN_URL,
+        FOREST_SUMMARY_HEAD,
+        FOREST_SUMMARY_STAT_TEMPLATE,
+        FOREST_TAG_URL,
+        TIMEZONE,
+    )
 
 
 class Forst:
-    def __init__(self, email, password):
+    def __init__(self, email, password, github_token, repo_name):
         self.email = email
         self.password = password
+        self.github_token = github_token
+        self.repo_name = repo_name
         self.s = requests.Session()
         self.year = datetime.now().year
         self.user_id = None
@@ -41,6 +55,8 @@ class Forst:
         self.is_login = True
 
     def make_plants_data(self):
+        if not self.is_login:
+            self.login()
         date = str(self.year) + "-01-01"
         r = self.s.get(FOREST_CLAENDAR_URL.format(date=date, user_id=self.user_id))
         if not r.ok:
@@ -58,12 +74,8 @@ class Forst:
         for t in tag_list:
             tag_dict[t["tag_id"]] = t["title"]
         return tag_dict
-
-    def make_year_stats(self):
-        if not self.is_login:
-            raise Exception("Please login first")
-        self.make_plants_data()
-
+    
+    # make forst tag like "代码" "日语" as key
     def _make_forest_dict(self, plants):
         if not self.plants:
             self.make_plants_data()
@@ -98,53 +110,57 @@ class Forst:
             body = body + "\r\n" + self._make_tag_summary_str(tag_summary_dict, unit)
         return body
 
-    def make_new_table(self, token, repo_name, issue_number=FOREST_ISSUE_NUMBER):
-        u = Github(token)
-        self.issue = u.get_repo(repo_name).get_issue(issue_number)
+    def make_year_stats_table(self, issue_number=FOREST_ISSUE_NUMBER):
+        u = Github(self.github_token)
+        self.issue = u.get_repo(self.repo_name).get_issue(issue_number)
         self.make_plants_data()
         plants = self.plants
         body = self.make_table_body(plants)
         self.issue.edit(body=body)
 
+    def __make_plants_body(self, day):
+        """
+        return a tuple, (bool, str)
+        """
+        plants = [
+            i
+            for i in self.plants
+            if pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
+            == day.to_date_string()
+        ] 
+        if not plants:
+            # if not plants we return empty string
+            return ""
+        return self.make_table_body(plants, day.to_date_string())
+        
+
     def make_daily_table(self):
         comments = list(self.issue.get_comments())
-        yesterday = pendulum.now(TIMEZONE).subtract(days=1)
         today = pendulum.now(TIMEZONE)
-        yesterday_plants = [
-            i
-            for i in self.plants
-            if pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
-            == yesterday.to_date_string()
-        ]
-        yesterday_body = self.make_table_body(
-            yesterday_plants, yesterday.to_date_string()
-        )
-        today_plants = [
-            i
-            for i in self.plants
-            if pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
-            == today.to_date_string()
-        ]
-        today_body = self.make_table_body(today_plants, today.to_date_string())
+        yesterday = pendulum.now(TIMEZONE).subtract(days=1)
+        yesterday_body = self.__make_plants_body(yesterday)
+        today_body = self.__make_plants_body(today)
         if not comments:
             # yesterday
-            if yesterday_plants:
+            if yesterday_body:
                 self.issue.create_comment(body=yesterday_body)
+            if today_body:
+                self.issue.create_comment(body=today_body)
         else:
             latest_comment = comments[-1]
             latest_day = pendulum.instance(latest_comment.created_at).in_timezone(
                 TIMEZONE
             )
-            is_today = (latest_day.day == today.day) and (
+            latest_issue_is_today = (latest_day.day == today.day) and (
                 latest_day.month == today.month
             )
-            is_yesterday = (latest_day.day == yesterday.day) and (
+            latest_issue_is_yesterday = (latest_day.day == yesterday.day) and (
                 latest_day.month == yesterday.month
             )
-            if is_yesterday:
+            if latest_issue_is_yesterday:
                 latest_comment.edit(body=yesterday_body)
             else:
-                if is_today:
+                if latest_issue_is_today:
                     latest_comment.edit(body=today_body)
                 else:
                     self.issue.create_comment(body=today_body)
@@ -152,7 +168,6 @@ class Forst:
     def make_forst_daily(self):
         end_date = pendulum.now(TIMEZONE)
         start_date = end_date.start_of("year")
-        self.make_year_stats()
         log_days = set(
             [
                 pendulum.parse(i["start_time"]).in_timezone(TIMEZONE).to_date_string()
@@ -181,10 +196,10 @@ class Forst:
 
 
 def get_forst_daily(email, password, github_token, repo_name):
-    f = Forst(email, password)
+    f = Forst(email, password, github_token, repo_name)
     f.login()
     # also edit the issue body
-    f.make_new_table(github_token, repo_name)
+    f.make_year_stats_table()
     f.make_daily_table()
     return f.make_forst_daily()
 
@@ -196,7 +211,7 @@ if __name__ == "__main__":
     parser.add_argument("github_token", help="github_token")
     parser.add_argument("repo_name", help="repo_name")
     options = parser.parse_args()
-    f = Forst(options.email, options.password)
+    f = Forst(options.email, options.password, options.github_token, options.repo_name)
     f.login()
-    f.make_new_table(options.github_token, options.repo_name)
+    f.make_year_stats_table()
     f.make_daily_table()
