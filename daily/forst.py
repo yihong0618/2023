@@ -7,7 +7,7 @@ import pendulum
 import requests
 from github import Github
 
-from config import (
+from .config import (
     FOREST_CLAENDAR_URL,
     FOREST_ISSUE_NUMBER,
     FOREST_LOGIN_URL,
