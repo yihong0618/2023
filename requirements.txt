@@ -1,3 +1,5 @@
 PyGithub
 requests
 pendulum
+rich
+
