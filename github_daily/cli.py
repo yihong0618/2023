@@ -82,10 +82,8 @@ class GTD:
                 self.now_comment = issue_comment
                 break
         else:
-            self.gtd_issue.create_comment(body="Today GTD\n")
-            # wait for create
-            time.sleep(2)
-            self.now_comment = list(self.gtd_issue.get_comments())[-1]
+            body = "Today GTD: "
+            self.now_comment = self.gtd_issue.create_comment(body=body)
         return body
 
     def show(self):
@@ -93,8 +91,13 @@ class GTD:
         print(body)
 
     def add(self, todo_string):
-        todo_string = "- [ ] " + todo_string + "\r\n"
-        body = self.now_comment.body + todo_string + "\r\n"
+        todo_string = "- [ ] " + todo_string
+        comment_body = self.now_comment.body
+        if comment_body:
+            # new line in GitHub is \r\n
+            if not (comment_body[-1]=="\n" and comment_body[-2]=="\r"):
+                comment_body = comment_body + "\r\n"
+        body = comment_body + todo_string
         self.now_comment.edit(body=body)
         print("Now TODO list after added")
         self.show()

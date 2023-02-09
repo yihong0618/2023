@@ -132,6 +132,12 @@ class Forst:
             # if not plants we return empty string
             return ""
         return self.make_table_body(plants, day.to_date_string())
+    
+    def _init_plants(self):
+        """
+        only support two days now?
+        """
+        pass
 
     def make_daily_table(self):
         comments = list(self.issue.get_comments())
@@ -139,6 +145,7 @@ class Forst:
         yesterday = pendulum.now(TIMEZONE).subtract(days=1)
         yesterday_body = self.__make_plants_body(yesterday)
         today_body = self.__make_plants_body(today)
+        # this is the init forst things 
         if not comments:
             # yesterday
             if yesterday_body:
