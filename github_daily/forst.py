@@ -53,6 +53,9 @@ class Forst:
             raise Exception(f"Someting is wrong to login -- {r.text}")
         self.user_id = r.json()["user_id"]
         self.is_login = True
+        # login github
+        u = Github(self.github_token)
+        self.issue = u.get_repo(self.repo_name).get_issue(FOREST_ISSUE_NUMBER)
 
     def make_plants_data(self):
         if not self.is_login:
@@ -96,10 +99,11 @@ class Forst:
         unit = "个"
         body = ""
         tag_summary_dict = self._make_forest_dict(plants)
-        for b in self.issue.body.splitlines():
-            if b.startswith("|"):
-                break
-            body += b
+        if self.issue:
+            for b in self.issue.body.splitlines():
+                if b.startswith("|"):
+                    break
+                body += b
         if date_str:
             body = (
                 f"{date_str} 的 Forst 番茄时间汇总"
@@ -111,15 +115,13 @@ class Forst:
             body = body + "\r\n" + self._make_tag_summary_str(tag_summary_dict, unit)
         return body
 
-    def make_year_stats_table(self, issue_number=FOREST_ISSUE_NUMBER):
-        u = Github(self.github_token)
-        self.issue = u.get_repo(self.repo_name).get_issue(issue_number)
+    def make_year_stats_table(self):
         self.make_plants_data()
         plants = self.plants
         body = self.make_table_body(plants)
         self.issue.edit(body=body)
 
-    def __make_plants_body(self, day):
+    def make_plants_body(self, day):
         """
         return a tuple, (bool, str)
         """
@@ -145,8 +147,8 @@ class Forst:
         comments = list(self.issue.get_comments())
         today = pendulum.now(TIMEZONE)
         yesterday = pendulum.now(TIMEZONE).subtract(days=1)
-        yesterday_body = self.__make_plants_body(yesterday)
-        today_body = self.__make_plants_body(today)
+        yesterday_body = self.make_plants_body(yesterday)
+        today_body = self.make_plants_body(today)
         # this is the init forst things
         if not comments:
             # init it from start day of the year
@@ -194,7 +196,6 @@ class Forst:
         if end_date.to_date_string() in self.log_days:
             streak += 1
 
-        # for else if not break not else
         for p in periods:
             if p.to_date_string() not in self.log_days:
                 break
