@@ -18,6 +18,7 @@ class ForstRunner(BaseRunner):
     3. - [ ] show summary
     4. - [ ] support yesterday
     """
+
     def __init__(self, show_name):
         super().__init__()
         email = os.getenv("FORST_EMAIL")
@@ -35,10 +36,14 @@ class ForstRunner(BaseRunner):
         table = Table(title="Forst Table Today")
         table.add_column("Tag", style="cyan", no_wrap=True)
         table.add_column("Times", justify="right", style="green")
-        for t in today_table.splitlines()[3:]:
-            content_list = t.split("|")
-            table.add_row(content_list[1], content_list[2].strip())
-        print(table)
+        try:
+            for t in today_table.splitlines()[3:]:
+                content_list = t.split("|")
+                table.add_row(content_list[1], content_list[2].strip())
+                print(table)
+        except:
+            # just print
+            print(Markdown("## No Forst Today"))
 
     def sync(self):
         self.forst.make_daily_table()

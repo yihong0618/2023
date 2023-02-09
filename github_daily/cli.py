@@ -57,7 +57,7 @@ def main():
     )
 
     forst.set_defaults(runner=ForstRunner)
-    
+
     args = args_parser.parse_args()
     runner = args.runner(args.show)
     match args.command:
