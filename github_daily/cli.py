@@ -95,7 +95,7 @@ class GTD:
         comment_body = self.now_comment.body
         if comment_body:
             # new line in GitHub is \r\n
-            if not (comment_body[-1]=="\n" and comment_body[-2]=="\r"):
+            if not (comment_body[-1] == "\n" and comment_body[-2] == "\r"):
                 comment_body = comment_body + "\r\n"
         body = comment_body + todo_string
         self.now_comment.edit(body=body)
@@ -117,7 +117,6 @@ class GTD:
                     if b.startswith(starts_str):
                         print(f"This is already {'done' if is_done else 'undone'}")
                         return
-                        new_body_with_done += b + "\r\n"
                         # Do nothing
                     else:
                         # tricky for only two elements list

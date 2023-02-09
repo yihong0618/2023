@@ -102,10 +102,11 @@ class Forst:
             body += b
         if date_str:
             body = (
-                f"{date_str}的 Forst 番茄时间汇总"
+                f"{date_str} 的 Forst 番茄时间汇总"
                 + "\r\n"
                 + self._make_tag_summary_str(tag_summary_dict, unit)
             )
+        # if no date str is the issue body --> sunmmary
         else:
             body = body + "\r\n" + self._make_tag_summary_str(tag_summary_dict, unit)
         return body
@@ -130,11 +131,12 @@ class Forst:
         ]
         if not plants:
             # if not plants we return empty string
-            return ""
+            return f"{day.to_date_string()} 的 Forst "
         return self.make_table_body(plants, day.to_date_string())
-    
+
     def _init_plants(self):
         """
+        TODO
         only support two days now?
         """
         pass
@@ -145,13 +147,11 @@ class Forst:
         yesterday = pendulum.now(TIMEZONE).subtract(days=1)
         yesterday_body = self.__make_plants_body(yesterday)
         today_body = self.__make_plants_body(today)
-        # this is the init forst things 
+        # this is the init forst things
         if not comments:
-            # yesterday
-            if yesterday_body:
-                self.issue.create_comment(body=yesterday_body)
-            if today_body:
-                self.issue.create_comment(body=today_body)
+            # init it from start day of the year
+            # TODO
+            self._init_plants()
         else:
             latest_comment = comments[-1]
             latest_day = pendulum.instance(latest_comment.created_at).in_timezone(
@@ -165,6 +165,8 @@ class Forst:
             )
             if latest_issue_is_yesterday:
                 latest_comment.edit(body=yesterday_body)
+                # create today empty body then latest issue is today comment
+                self.issue.create_comment(body=today_body)
             else:
                 if latest_issue_is_today:
                     latest_comment.edit(body=today_body)
