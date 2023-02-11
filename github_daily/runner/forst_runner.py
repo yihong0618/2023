@@ -13,13 +13,13 @@ import pendulum
 class ForstRunner(BaseRunner):
     """
     TODO
-    1. - [ ] show table.
-    2. - [ ] sync today
+    1. - [x] show table.
+    2. - [x] sync today
     3. - [ ] show summary
     4. - [ ] support yesterday
     """
 
-    def __init__(self, show_name):
+    def __init__(self):
         super().__init__()
         email = os.getenv("FORST_EMAIL")
         password = os.getenv("FORST_PASSWORD")
@@ -29,7 +29,7 @@ class ForstRunner(BaseRunner):
         self.forst.login()
         self.forst.make_plants_data()
         self.today = pendulum.now(TIMEZONE)
-        self.show_name = show_name
+        self.show_day = "today"
 
     def show(self):
         today_table = self.forst.make_plants_body(self.today)
@@ -40,7 +40,7 @@ class ForstRunner(BaseRunner):
             for t in today_table.splitlines()[3:]:
                 content_list = t.split("|")
                 table.add_row(content_list[1], content_list[2].strip())
-                print(table)
+            print(table)
         except:
             # just print
             print(Markdown("## No Forst Today"))

@@ -3,13 +3,14 @@
 # use Python for now maybe Rust in the future
 import argparse
 
-from github_daily.runner import GTDRunner, ForstRunner
+from github_daily.runner import GTDRunner, ForstRunner, IdeaRunner
 
 
 def main():
     # TODO refactor this like GitHubPoster
     args_parser = argparse.ArgumentParser()
     subparser = args_parser.add_subparsers(dest="command")
+    ########### GTD RUNNER ###########
     gtd = subparser.add_parser(name="gtd")
     gtd.set_defaults(runner=GTDRunner)
 
@@ -18,7 +19,7 @@ def main():
         dest="show",
         type=str,
         default="today",
-        choices=["today", "yesterday"],
+        choices=["today", "yesterday", "all"],
         help="show today forst table",
     )
     gtd.add_argument(
@@ -40,13 +41,14 @@ def main():
         type=int,
         help="which to do to be undone",
     )
+    ########### FORST RUNNER ###########
     forst = subparser.add_parser(name="forst")
     forst.add_argument(
         "--show",
         dest="show",
         type=str,
         default="today",
-        choices=["today", "yesterday"],
+        choices=["today", "yesterday", "all"],
         help="show today forst table",
     )
     forst.add_argument(
@@ -55,14 +57,34 @@ def main():
         action="store_true",
         help="if to sync the forst to GitHub",
     )
-
     forst.set_defaults(runner=ForstRunner)
 
+    ########### IDEA RUNNER ###########
+    idea = subparser.add_parser(name="idea")
+    idea.add_argument(
+        "--show",
+        dest="show",
+        type=str,
+        default="all",
+        choices=["all", "today"],
+        help="show today or all idea as table",
+    )
+    idea.add_argument(
+        "--add",
+        dest="add",
+        type=str,
+        help="idea to add",
+    )
+    idea.set_defaults(runner=IdeaRunner)
+
     args = args_parser.parse_args()
-    runner = args.runner(args.show)
+    # all runner
+    runner = args.runner()
+    if args.show:
+        runner.show_day = args.show
+        runner.show()
     match args.command:
         case "gtd":
-            runner.show()
             if args.add:
                 runner.add(args.add)
             else:
@@ -71,10 +93,11 @@ def main():
                 if args.undone:
                     runner.done_or_undone(args.undone, is_done=False)
         case "forst":
-            runner.show()
             if args.sync:
                 runner.sync()
-
+        case "idea":
+            if args.add:
+                runner.add(args.add)
         case _:
             print("Not support for now")
 

@@ -34,6 +34,10 @@ GTD_LABEL_LIST = [
     "GTD",
 ]
 
+IDEA_LABEL_LIST = [
+    "Idea",
+]
+
 WEEKLY_LABEL_LIST = [
     "Weekly",
 ]

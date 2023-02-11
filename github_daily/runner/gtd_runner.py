@@ -16,13 +16,14 @@ class GTDRunner(BaseRunner):
     1. - [x] just for today show
     2. - [x] add today add
     3. - [x] add today done
-    4. - [ ]add all list
-    5. - [ ]add show yesterday
-    6. - [ ]add chart?
+    4. - [ ] add all list
+    5. - [ ] add show yesterday
+    6. - [ ] add chart?
     """
 
-    def __init__(self, show_name):
-        self.show_name = show_name
+    def __init__(self):
+        # default show day is today
+        self.show_day = "today"
         self.g = Github(os.getenv("GITHUB_TOKEN"))
         # only for the latest one
         gtd_issues = list(self.g.get_repo(REPO_NAME).get_issues(labels=GTD_LABEL_LIST))
@@ -62,7 +63,7 @@ class GTDRunner(BaseRunner):
         return issue_body_with_index
 
     def make_todo_list_body(self):
-        if self.show_name not in ["today", "yesterday"]:
+        if self.show_day not in ["today", "yesterday"]:
             raise Exception("For now only support today or yesterday")
         body = ""
         for issue_comment in self.gtd_issue.get_comments():
