@@ -1,13 +1,13 @@
-from github_daily.runner.base_runner import BaseRunner
-
 import os
+
+import pendulum
+from github import Github
 from rich import print
 from rich.markdown import Markdown
 
 from github_daily.config import GTD_LABEL_LIST, REPO_NAME, TIMEZONE
-
-from github import Github
-import pendulum
+from github_daily.runner.base_runner import BaseRunner
+from github_daily.runner.utils import day_to_pendulum
 
 
 class GTDRunner(BaseRunner):
@@ -33,11 +33,11 @@ class GTDRunner(BaseRunner):
         self.now_comment = None
         self.now_comment_gtd_len = 0
 
-    @staticmethod
-    def is_the_day(issue_day):
+    def is_the_day(self, issue_day):
+        day = day_to_pendulum(self.show_day)
         return (
             pendulum.instance(issue_day).in_timezone(TIMEZONE).to_date_string()
-            == pendulum.now(TIMEZONE).to_date_string()
+            == day.to_date_string()
         )
 
     def _add_index_to_todo_body(self, body):

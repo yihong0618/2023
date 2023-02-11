@@ -1,7 +1,7 @@
 import argparse
-import requests
-import pendulum
 
+import pendulum
+import requests
 from github import Github
 
 # set up your shanbay issue index

@@ -3,7 +3,7 @@
 # use Python for now maybe Rust in the future
 import argparse
 
-from github_daily.runner import GTDRunner, ForstRunner, IdeaRunner
+from github_daily.runner import ForstRunner, GTDRunner, IdeaRunner
 
 
 def main():

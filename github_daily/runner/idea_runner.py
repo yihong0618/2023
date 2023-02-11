@@ -1,12 +1,12 @@
 import os
 
+import pendulum
+from github import Github
 from rich import print
 from rich.table import Table
-from github_daily.runner.base_runner import BaseRunner
-from github_daily.config import REPO_NAME, IDEA_LABEL_LIST, TIMEZONE
 
-from github import Github
-import pendulum
+from github_daily.config import IDEA_LABEL_LIST, REPO_NAME, TIMEZONE
+from github_daily.runner.base_runner import BaseRunner
 
 
 class IdeaRunner(BaseRunner):
@@ -22,7 +22,9 @@ class IdeaRunner(BaseRunner):
         super().__init__()
         self.g = Github(os.getenv("GITHUB_TOKEN"))
         # only for the latest one
-        idea_issues = list(self.g.get_repo(REPO_NAME).get_issues(labels=IDEA_LABEL_LIST))
+        idea_issues = list(
+            self.g.get_repo(REPO_NAME).get_issues(labels=IDEA_LABEL_LIST)
+        )
         if not idea_issues:
             raise Exception("No idea issue please create one")
         self.idea_issue = idea_issues[0]
@@ -36,9 +38,11 @@ class IdeaRunner(BaseRunner):
         if not comments:
             print("No idea this year for now, go go go to create one")
         for comment in comments:
-            comment_day_string = pendulum.instance(comment.created_at).in_timezone(
-                TIMEZONE
-            ).to_date_string()
+            comment_day_string = (
+                pendulum.instance(comment.created_at)
+                .in_timezone(TIMEZONE)
+                .to_date_string()
+            )
             table.add_row(comment_day_string, comment.body.strip())
         print(table)
 

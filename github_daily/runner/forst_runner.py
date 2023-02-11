@@ -1,13 +1,14 @@
 import os
 
-from rich.markdown import Markdown
-from rich import print
-from rich.table import Table
-from github_daily.runner.base_runner import BaseRunner
-from github_daily.forst import Forst
-from github_daily.config import GTD_LABEL_LIST, REPO_NAME, TIMEZONE
-
 import pendulum
+from rich import print
+from rich.markdown import Markdown
+from rich.table import Table
+
+from github_daily.config import REPO_NAME, TIMEZONE
+from github_daily.forst import Forst
+from github_daily.runner.base_runner import BaseRunner
+from github_daily.runner.utils import day_to_pendulum
 
 
 class ForstRunner(BaseRunner):
@@ -29,11 +30,12 @@ class ForstRunner(BaseRunner):
         self.forst.login()
         self.forst.make_plants_data()
         self.today = pendulum.now(TIMEZONE)
-        self.show_day = "today"
+        self.show_day = "today"  # only three support today/yesterday/summay
 
     def show(self):
-        today_table = self.forst.make_plants_body(self.today)
-        table = Table(title="Forst Table Today")
+        day = day_to_pendulum(self.show_day)
+        today_table = self.forst.make_plants_body(day)
+        table = Table(title=f"FORST TABLE {self.show_day.upper()}")
         table.add_column("Tag", style="cyan", no_wrap=True)
         table.add_column("Times", justify="right", style="green")
         try:

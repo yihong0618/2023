@@ -1,4 +1,3 @@
-import argparse
 import json
 from collections import Counter
 from datetime import datetime
@@ -7,27 +6,9 @@ import pendulum
 import requests
 from github import Github
 
-if __name__ == "__main__":
-    from config import (
-        FOREST_CLAENDAR_URL,
-        FOREST_ISSUE_NUMBER,
-        FOREST_LOGIN_URL,
-        FOREST_SUMMARY_HEAD,
-        FOREST_SUMMARY_STAT_TEMPLATE,
-        FOREST_TAG_URL,
-        TIMEZONE,
-    )
-
-else:
-    from .config import (
-        FOREST_CLAENDAR_URL,
-        FOREST_ISSUE_NUMBER,
-        FOREST_LOGIN_URL,
-        FOREST_SUMMARY_HEAD,
-        FOREST_SUMMARY_STAT_TEMPLATE,
-        FOREST_TAG_URL,
-        TIMEZONE,
-    )
+from .config import (FOREST_CLAENDAR_URL, FOREST_ISSUE_NUMBER,
+                     FOREST_LOGIN_URL, FOREST_SUMMARY_HEAD,
+                     FOREST_SUMMARY_STAT_TEMPLATE, FOREST_TAG_URL, TIMEZONE)
 
 
 class Forst:
@@ -123,8 +104,11 @@ class Forst:
 
     def make_plants_body(self, day):
         """
-        return a tuple, (bool, str)
+        if there no day we do not need to filter
+        TODO refactor here
         """
+        if not day:
+            return self.make_table_body(self.plants)
         plants = [
             i
             for i in self.plants
@@ -140,6 +124,8 @@ class Forst:
         """
         TODO
         only support two days now?
+        if I want to make the year repo to template
+        I must support this
         """
         pass
 
@@ -211,16 +197,3 @@ def get_forst_daily(email, password, github_token, repo_name):
     f.make_year_stats_table()
     f.make_daily_table()
     return f.make_forst_daily()
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("email", help="email")
-    parser.add_argument("password", help="password")
-    parser.add_argument("github_token", help="github_token")
-    parser.add_argument("repo_name", help="repo_name")
-    options = parser.parse_args()
-    f = Forst(options.email, options.password, options.github_token, options.repo_name)
-    f.login()
-    f.make_year_stats_table()
-    f.make_daily_table()
