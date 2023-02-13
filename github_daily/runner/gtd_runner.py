@@ -17,7 +17,7 @@ class GTDRunner(BaseRunner):
     2. - [x] add today add
     3. - [x] add today done
     4. - [ ] add all list
-    5. - [ ] add show yesterday
+    5. - [x] add show yesterday
     6. - [ ] add chart?
     """
 
@@ -51,12 +51,12 @@ class GTDRunner(BaseRunner):
                 issue_body_with_index += b + "\r\n"
                 start_index += 1
 
-        for index, todo in enumerate(body_list[start_index:], 1):
+        for _, todo in enumerate(body_list[start_index:], 1):
             try:
                 front, end = todo.split("]")
-                issue_body_with_index += f"{front}] {str(index)}.{end}\r\n"
-                # add the todo length
                 self.now_comment_gtd_len += 1
+                issue_body_with_index += f"{front}] {str(self.now_comment_gtd_len)}.{end}\r\n"
+                # add the todo length
             # just pass the wrong format
             except:
                 pass
@@ -64,7 +64,7 @@ class GTDRunner(BaseRunner):
 
     def make_todo_list_body(self):
         if self.show_day not in ["today", "yesterday"]:
-            raise Exception("For now only support today or yesterday")
+            raise Exception("For now only support today or yesterday or all")
         body = ""
         for issue_comment in self.gtd_issue.get_comments():
             if self.is_the_day(issue_comment.created_at):
@@ -80,8 +80,24 @@ class GTDRunner(BaseRunner):
             self.now_comment = self.gtd_issue.create_comment(body=body)
         return body
 
+    def make_todo_list_body_all(self):
+        if self.show_day != "all":
+            raise Exception("For now only support all")
+        body = ""
+        for issue_comment in self.gtd_issue.get_comments():
+            body += issue_comment.body
+        body = Markdown(
+            "---\r\n"
+            + self._add_index_to_todo_body(body)
+            + "\r\n---\r\n"
+        )
+        return body
+
     def show(self):
-        body = self.make_todo_list_body()
+        if self.show_day in ["today", "yesterday"]:
+            body = self.make_todo_list_body()
+        else:
+            body = self.make_todo_list_body_all()
         print(body)
 
     def add(self, todo_string):
@@ -100,6 +116,8 @@ class GTDRunner(BaseRunner):
         if done_index > self.now_comment_gtd_len:
             print("your index bigger than all the todo index please check")
             return
+        if self.show_day == "all":
+            raise Exception("do not support all for done or undone")
         index = 0
         new_body_with_done = ""
         starts_str_list = ["- [ ]", "- [x]"]
@@ -123,5 +141,6 @@ class GTDRunner(BaseRunner):
 
             else:
                 new_body_with_done += b + "\r\n"
+        self.now_comment_gtd_len = 0
         print(Markdown(self._add_index_to_todo_body(new_body_with_done)))
         self.now_comment.edit(body=new_body_with_done)
