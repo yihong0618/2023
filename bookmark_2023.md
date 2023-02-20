@@ -16,3 +16,4 @@
 | [tcp](https://jvns.ca/blog/2016/03/16/tcpdump-is-amazing/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1413634950 | 2023-02-02 | 2023-02-02 | False |
 | [地图](https://lewinb.net/posts/03_geohub/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1414588922 | 2023-02-03 | 2023-02-03 | False |
 | [IOT](https://www.twblogs.net/a/5b8e38282b7177188343976f/?lang=zh-cn) | https://github.com/yihong0618/2023/issues/4#issuecomment-1435999205 | 2023-02-19 | 2023-02-19 | False |
+| [C](https://blog.joren.ga/less-known-c#array-pointers) | https://github.com/yihong0618/2023/issues/4#issuecomment-1436198042 | 2023-02-20 | 2023-02-20 | False |
