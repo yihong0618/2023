@@ -16,7 +16,7 @@ class GTDRunner(BaseRunner):
     1. - [x] just for today show
     2. - [x] add today add
     3. - [x] add today done
-    4. - [ ] add all list
+    4. - [x] add all list
     5. - [x] add show yesterday
     6. - [ ] add chart?
     """

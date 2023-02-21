@@ -3,7 +3,7 @@
 # use Python for now maybe Rust in the future
 import argparse
 
-from github_daily.runner import ForstRunner, GTDRunner, IdeaRunner
+from github_daily.runner import ForstRunner, GTDRunner, IdeaRunner, ReadRunner
 
 
 def main():
@@ -77,6 +77,24 @@ def main():
     )
     idea.set_defaults(runner=IdeaRunner)
 
+    ########### READ RUNNER ###########
+    read = subparser.add_parser(name="read")
+    read.add_argument(
+        "--show",
+        dest="show",
+        type=str,
+        default="all",
+        choices=["all", "today"],
+        help="show today or all read as table",
+    )
+    read.add_argument(
+        "--add",
+        dest="add",
+        type=str,
+        help="read to add",
+    )
+    read.set_defaults(runner=ReadRunner)
+
     args = args_parser.parse_args()
     # all runner
     runner = args.runner()
@@ -96,6 +114,9 @@ def main():
             if args.sync:
                 runner.sync()
         case "idea":
+            if args.add:
+                runner.add(args.add)
+        case "read":
             if args.add:
                 runner.add(args.add)
         case _:
