@@ -13,8 +13,8 @@ from github_daily.runner.base_runner import BaseRunner
 class ReadRunner(BaseRunner):
     """
     books
-    - [ ] add book
-    - [ ] list
+    - [x] add book
+    - [x] list
     """
 
     def __init__(self):

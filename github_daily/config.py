@@ -46,6 +46,12 @@ SQUAT_LABEL_LIST = [
     "Squat",
 ]
 
+### 2023 NEW ###
+TIMELINE_LABEL_LIST = [
+    "Timeline",
+]
+
+
 # if you are not me change here
 MY_BLOG_REPO = "yihong0618/gitblog"
 GITHUB_README_COMMENTS = (

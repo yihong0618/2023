@@ -3,7 +3,7 @@
 # use Python for now maybe Rust in the future
 import argparse
 
-from github_daily.runner import ForstRunner, GTDRunner, IdeaRunner, ReadRunner
+from github_daily.runner import ForstRunner, GTDRunner, IdeaRunner, ReadRunner, TimelineRunner
 
 
 def main():
@@ -95,6 +95,24 @@ def main():
     )
     read.set_defaults(runner=ReadRunner)
 
+    ########### TiMELINE RUNNER ###########
+    timeline = subparser.add_parser(name="timeline")
+    timeline.add_argument(
+        "--show",
+        dest="show",
+        type=str,
+        default="all",
+        choices=["all", "today"],
+        help="show today or all timeline as table",
+    )
+    timeline.add_argument(
+        "--add",
+        dest="add",
+        type=str,
+        help="timeline to add",
+    )
+    timeline.set_defaults(runner=TimelineRunner)
+
     args = args_parser.parse_args()
     # all runner
     runner = args.runner()
@@ -117,6 +135,9 @@ def main():
             if args.add:
                 runner.add(args.add)
         case "read":
+            if args.add:
+                runner.add(args.add)
+        case "timeline":
             if args.add:
                 runner.add(args.add)
         case _:
