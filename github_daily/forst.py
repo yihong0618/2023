@@ -6,9 +6,15 @@ import pendulum
 import requests
 from github import Github
 
-from .config import (FOREST_CLAENDAR_URL, FOREST_ISSUE_NUMBER,
-                     FOREST_LOGIN_URL, FOREST_SUMMARY_HEAD,
-                     FOREST_SUMMARY_STAT_TEMPLATE, FOREST_TAG_URL, TIMEZONE)
+from .config import (
+    FOREST_CLAENDAR_URL,
+    FOREST_ISSUE_NUMBER,
+    FOREST_LOGIN_URL,
+    FOREST_SUMMARY_HEAD,
+    FOREST_SUMMARY_STAT_TEMPLATE,
+    FOREST_TAG_URL,
+    TIMEZONE,
+)
 
 
 class Forst:

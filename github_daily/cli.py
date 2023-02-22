@@ -3,7 +3,13 @@
 # use Python for now maybe Rust in the future
 import argparse
 
-from github_daily.runner import ForstRunner, GTDRunner, IdeaRunner, ReadRunner, TimelineRunner
+from github_daily.runner import (
+    ForstRunner,
+    GTDRunner,
+    IdeaRunner,
+    ReadRunner,
+    TimelineRunner,
+)
 
 
 def main():
@@ -15,6 +21,7 @@ def main():
     gtd.set_defaults(runner=GTDRunner)
 
     gtd.add_argument(
+        "-s",
         "--show",
         dest="show",
         type=str,
@@ -23,6 +30,7 @@ def main():
         help="show today forst table",
     )
     gtd.add_argument(
+        "-a",
         "--add",
         dest="add",
         type=str,
@@ -30,12 +38,14 @@ def main():
     )
 
     gtd.add_argument(
+        "-d",
         "--done",
         dest="done",
         type=int,
         help="which to do to be done",
     )
     gtd.add_argument(
+        "-ud",
         "--undone",
         dest="undone",
         type=int,
@@ -44,6 +54,7 @@ def main():
     ########### FORST RUNNER ###########
     forst = subparser.add_parser(name="forst")
     forst.add_argument(
+        "-s",
         "--show",
         dest="show",
         type=str,
@@ -52,6 +63,7 @@ def main():
         help="show today forst table",
     )
     forst.add_argument(
+        "-sy",
         "--sync",
         dest="sync",
         action="store_true",
@@ -62,6 +74,7 @@ def main():
     ########### IDEA RUNNER ###########
     idea = subparser.add_parser(name="idea")
     idea.add_argument(
+        "-s",
         "--show",
         dest="show",
         type=str,
@@ -70,6 +83,7 @@ def main():
         help="show today or all idea as table",
     )
     idea.add_argument(
+        "-a",
         "--add",
         dest="add",
         type=str,
@@ -80,6 +94,7 @@ def main():
     ########### READ RUNNER ###########
     read = subparser.add_parser(name="read")
     read.add_argument(
+        "-s",
         "--show",
         dest="show",
         type=str,
@@ -88,6 +103,7 @@ def main():
         help="show today or all read as table",
     )
     read.add_argument(
+        "-a",
         "--add",
         dest="add",
         type=str,
@@ -98,6 +114,7 @@ def main():
     ########### TiMELINE RUNNER ###########
     timeline = subparser.add_parser(name="timeline")
     timeline.add_argument(
+        "-s",
         "--show",
         dest="show",
         type=str,
@@ -106,6 +123,7 @@ def main():
         help="show today or all timeline as table",
     )
     timeline.add_argument(
+        "-a",
         "--add",
         dest="add",
         type=str,

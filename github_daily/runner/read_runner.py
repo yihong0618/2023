@@ -44,7 +44,7 @@ class ReadRunner(BaseRunner):
                 .to_date_string()
             )
             c = comment.body.splitlines()
-            book_title  = c[0]
+            book_title = c[0]
             read_content = "".join(c[1:])
             table.add_row(comment_day_string, book_title, read_content)
         print(table)

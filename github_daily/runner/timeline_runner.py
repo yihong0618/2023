@@ -12,8 +12,8 @@ from github_daily.runner.base_runner import BaseRunner
 
 class TimelineRunner(BaseRunner):
     """
-    timeline 
-    - [x] add new 
+    timeline
+    - [x] add new
     - [x] list
     """
 
@@ -53,11 +53,16 @@ class TimelineRunner(BaseRunner):
         else:
             last_comment = comments[-1]
 
-            if pendulum.today(TIMEZONE).to_date_string() == pendulum.instance(last_comment.created_at).in_timezone(TIMEZONE).to_date_string():
+            if (
+                pendulum.today(TIMEZONE).to_date_string()
+                == pendulum.instance(last_comment.created_at)
+                .in_timezone(TIMEZONE)
+                .to_date_string()
+            ):
                 timeline_string = last_comment.body + "\r\n" + timeline_string
-                last_comment.edit(body=timeline_string)         
+                last_comment.edit(body=timeline_string)
             else:
                 self.timeline_issue.create_comment(body=timeline_string)
-        
+
         print("After add the timeline, now timeline")
         self.show()

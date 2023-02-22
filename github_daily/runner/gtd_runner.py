@@ -55,7 +55,9 @@ class GTDRunner(BaseRunner):
             try:
                 front, end = todo.split("]")
                 self.now_comment_gtd_len += 1
-                issue_body_with_index += f"{front}] {str(self.now_comment_gtd_len)}.{end}\r\n"
+                issue_body_with_index += (
+                    f"{front}] {str(self.now_comment_gtd_len)}.{end}\r\n"
+                )
                 # add the todo length
             # just pass the wrong format
             except:
@@ -86,11 +88,7 @@ class GTDRunner(BaseRunner):
         body = ""
         for issue_comment in self.gtd_issue.get_comments():
             body += issue_comment.body
-        body = Markdown(
-            "---\r\n"
-            + self._add_index_to_todo_body(body)
-            + "\r\n---\r\n"
-        )
+        body = Markdown("---\r\n" + self._add_index_to_todo_body(body) + "\r\n---\r\n")
         return body
 
     def show(self):
