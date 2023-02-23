@@ -108,6 +108,7 @@ class GTDRunner(BaseRunner):
         body = comment_body + todo_string
         self.now_comment.edit(body=body)
         print("Now TODO list after added")
+        self.now_comment_gtd_len = 0
         self.show()
 
     def done_or_undone(self, done_index, is_done=True):
