@@ -31,7 +31,7 @@ class TimelineRunner(BaseRunner):
 
     def show(self):
         comments = self.timeline_issue.get_comments()
-        table = Table(title=f"My READ {datetime.now().year}")
+        table = Table(title=f"My Timeline {datetime.now().year}")
         table.add_column("Timeline Day", style="cyan", no_wrap=True)
         table.add_column("Timeline Content", justify="left", style="green")
         if not comments:
@@ -48,6 +48,8 @@ class TimelineRunner(BaseRunner):
     def add(self, timeline_string):
         # do the add
         comments = list(self.timeline_issue.get_comments())
+        time_now_string = str(pendulum.now().time())[:8]
+        timeline_string = f"{time_now_string}: {timeline_string}"
         if not comments:
             self.timeline_issue.create_comment(body=timeline_string)
         else:
