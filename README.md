@@ -183,4 +183,5 @@
 | [baotiao](http://baotiao.github.io/) | 2022.01.31 | 数据库 | 做有积累的事情 |
 | [javabin](http://javabin.cn/archives/) | 2022.02.03 | hacker | 好 cool 的人 |
 | [soulteary](https://soulteary.com/) | 2022.02.07 | DIY 神 | 向往 |
+| [7dot9](https://7dot9.com/) | 2022.02.26 | 前辈 | 梦在这里可以飞翔 |
 
