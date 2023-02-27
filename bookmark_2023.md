@@ -18,3 +18,4 @@
 | [IOT](https://www.twblogs.net/a/5b8e38282b7177188343976f/?lang=zh-cn) | https://github.com/yihong0618/2023/issues/4#issuecomment-1435999205 | 2023-02-19 | 2023-02-19 | False |
 | [C](https://blog.joren.ga/less-known-c#array-pointers) | https://github.com/yihong0618/2023/issues/4#issuecomment-1436198042 | 2023-02-20 | 2023-02-20 | False |
 | [Linux](https://www.win.tue.nl/~aeb/linux/lk/lk-9.html#ss9.6) | https://github.com/yihong0618/2023/issues/4#issuecomment-1446016702 | 2023-02-27 | 2023-02-27 | False |
+| [GO](https://www.hitzhangjie.pro/debugger101.io/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1446242288 | 2023-02-27 | 2023-02-27 | False |
