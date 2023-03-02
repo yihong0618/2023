@@ -19,3 +19,4 @@
 | [C](https://blog.joren.ga/less-known-c#array-pointers) | https://github.com/yihong0618/2023/issues/4#issuecomment-1436198042 | 2023-02-20 | 2023-02-20 | False |
 | [Linux](https://www.win.tue.nl/~aeb/linux/lk/lk-9.html#ss9.6) | https://github.com/yihong0618/2023/issues/4#issuecomment-1446016702 | 2023-02-27 | 2023-02-27 | False |
 | [GO](https://www.hitzhangjie.pro/debugger101.io/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1446242288 | 2023-02-27 | 2023-02-28 | False |
+| [内存](https://hulkdev.com/posts-overcommit-memory/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1451662150 | 2023-03-02 | 2023-03-02 | False |
