@@ -19,5 +19,6 @@
 | [C](https://blog.joren.ga/less-known-c#array-pointers) | https://github.com/yihong0618/2023/issues/4#issuecomment-1436198042 | 2023-02-20 | 2023-02-20 | False |
 | [Linux](https://www.win.tue.nl/~aeb/linux/lk/lk-9.html#ss9.6) | https://github.com/yihong0618/2023/issues/4#issuecomment-1446016702 | 2023-02-27 | 2023-02-27 | False |
 | [GO](https://www.hitzhangjie.pro/debugger101.io/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1446242288 | 2023-02-27 | 2023-02-28 | False |
-| [内存](https://hulkdev.com/posts-overcommit-memory/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1451662150 | 2023-03-02 | 2023-03-02 | False |
+| [内存](https://hulkdev.com/posts-overcommit-memory/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1451662150 | 2023-03-02 | 2023-03-06 | False |
 | [Go 内存]([聊聊Go内存优化和相关底层机制](https://wudaijun.com/2019/09/go-performance-optimization/ )) | https://github.com/yihong0618/2023/issues/4#issuecomment-1453229711 | 2023-03-03 | 2023-03-03 | False |
+| [GC](https://bbs.huaweicloud.com/blogs/296981) | https://github.com/yihong0618/2023/issues/4#issuecomment-1455904651 | 2023-03-06 | 2023-03-06 | False |
