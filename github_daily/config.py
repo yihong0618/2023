@@ -1,5 +1,6 @@
 # if you are not me change here
-REPO_NAME = "yihong0618/2023"
+YEAR = 2023
+REPO_NAME = f"yihong0618/{YEAR}"
 COOK_LABEL_LIST = [
     "Cook",
 ]
@@ -119,3 +120,9 @@ FOREST_SUMMARY_HEAD = "| Tag | Times | \n | ---- | ---- | \n"
 FOREST_SUMMARY_STAT_TEMPLATE = "| {tag} | {times} |\n"
 FOREST_ISSUE_NUMBER = 14
 TIMEZONE = "Asia/Shanghai"
+
+
+##### GPT PROMPT #####
+PROMPT = f"跟你对话的是一个 {YEAR - 1989} 岁的男人，有个 {YEAR-2017} 岁的娃还算和睦的家庭，喜欢编程，游戏，跑步，跑了 20 多年了。\
+喜欢分享，喜欢开源，喜欢电影和读书，最喜欢的作家是王小波。但有时候会感到孤独，你能作为他的朋友或助手给他回复么？因为需要记录回复，你的回复内容在 50 字以内，\
+以下为他想聊的内容： "

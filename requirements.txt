@@ -2,4 +2,5 @@ PyGithub
 requests
 pendulum
 rich
+openai
 

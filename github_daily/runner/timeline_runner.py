@@ -4,9 +4,10 @@ import pendulum
 from datetime import datetime
 from github import Github
 from rich import print
+import openai
 from rich.table import Table
 
-from github_daily.config import TIMELINE_LABEL_LIST, REPO_NAME, TIMEZONE
+from github_daily.config import TIMELINE_LABEL_LIST, REPO_NAME, TIMEZONE, PROMPT
 from github_daily.runner.base_runner import BaseRunner
 
 
@@ -28,6 +29,7 @@ class TimelineRunner(BaseRunner):
             raise Exception("No idea issue please create one")
         self.timeline_issue = timeline_issues[0]
         self.show_day = "all"
+        self.history = []  # for openai ask with history
 
     def show(self):
         comments = self.timeline_issue.get_comments()
@@ -45,6 +47,47 @@ class TimelineRunner(BaseRunner):
             table.add_row(comment_day_string, comment.body)
         print(table)
 
+    def _make_res(self, timeline_string):
+        ms = []
+        if self.history:
+            first = self.history.pop(0)
+            first[0] = PROMPT + first[0]
+            ms.append(({"role": "user", "content": first[0]}))
+            ms.append({"role": "assistant", "content": first[1]})
+        for h in self.history:
+            ms.append({"role": "user", "content": h[0]})
+            ms.append({"role": "assistant", "content": h[1]})
+        ms.append({"role": "user", "content": f"{timeline_string}"})
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=ms,
+        )
+        res = (
+            completion["choices"][0]
+            .get("message")
+            .get("content")
+            .encode("utf8")
+            .decode()
+        )
+        res = res.lstrip("\n").rstrip("\n")
+        if res.startswith("> "):
+            gpt_res = f"{res}\r\n"
+        else:
+            gpt_res = f"> {res}\r\n"
+        return gpt_res
+
+    def _make_history(self, comment_body):
+        body_lines = comment_body.splitlines()
+        body_lines = [l for l in body_lines if l]
+        for i in range(len(body_lines) - 1):
+            query = body_lines[i]
+            answer = body_lines[i + 1]
+            # trick for time its just for me
+            if query[:2].isdigit():
+                if answer.startswith("> "):
+                    query = query.split(":")[-1]
+                    self.history.append([query, answer])
+
     def add(self, timeline_string):
         # do the add
         comments = list(self.timeline_issue.get_comments())
@@ -61,10 +104,30 @@ class TimelineRunner(BaseRunner):
                 .in_timezone(TIMEZONE)
                 .to_date_string()
             ):
+                # make history first
+                self._make_history(last_comment.body)
+                gpt_res = self._make_res(timeline_string)
                 timeline_string = last_comment.body + "\r\n" + timeline_string
-                last_comment.edit(body=timeline_string)
+                last_comment.edit(body=timeline_string + "\r\n" + gpt_res)
             else:
-                self.timeline_issue.create_comment(body=timeline_string)
+                # TODO refactor this
+                completion = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "user", "content": f"{PROMPT}，{timeline_string}"}
+                    ],
+                )
+                res = (
+                    completion["choices"][0]
+                    .get("message")
+                    .get("content")
+                    .encode("utf8")
+                    .decode()
+                )
+                res = res.lstrip("\n").rstrip("\n")
+                self.timeline_issue.create_comment(
+                    body=timeline_string + "\r\n" + "> " + res + "\r\n"
+                )
 
         print("After add the timeline, now timeline")
         self.show()
