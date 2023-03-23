@@ -32,7 +32,7 @@ class PushupRunner(BaseRunner):
 
     def show(self):
         comments = self.pushup_issue.get_comments()
-        table = Table(title=f"My READ {datetime.now().year}")
+        table = Table(title=f"My Pushups {datetime.now().year}")
         table.add_column("Pushup Day", style="cyan", no_wrap=True)
         table.add_column("Count", justify="left", style="green")
         pushups_dict = defaultdict(int)
