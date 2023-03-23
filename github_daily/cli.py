@@ -9,6 +9,7 @@ from github_daily.runner import (
     IdeaRunner,
     ReadRunner,
     TimelineRunner,
+    PushupRunner,
 )
 
 
@@ -130,6 +131,25 @@ def main():
         help="timeline to add",
     )
     timeline.set_defaults(runner=TimelineRunner)
+    ########### Pushup RUNNER ###########
+    pushup = subparser.add_parser(name="pushup")
+    pushup.add_argument(
+        "-s",
+        "--show",
+        dest="show",
+        type=str,
+        default="all",
+        choices=["all", "today"],
+        help="show today or all timeline as table",
+    )
+    pushup.add_argument(
+        "-a",
+        "--add",
+        dest="add",
+        type=str,
+        help="push up to add",
+    )
+    pushup.set_defaults(runner=PushupRunner)
 
     args = args_parser.parse_args()
     # all runner
@@ -149,13 +169,7 @@ def main():
         case "forst":
             if args.sync:
                 runner.sync()
-        case "idea":
-            if args.add:
-                runner.add(args.add)
-        case "read":
-            if args.add:
-                runner.add(args.add)
-        case "timeline":
+        case "idea" | "read" | "timeline" | "pushup":
             if args.add:
                 runner.add(args.add)
         case _:
