@@ -3,4 +3,4 @@ requests
 pendulum
 rich
 openai
-
+BingImageCreator
