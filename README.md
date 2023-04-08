@@ -160,6 +160,7 @@
 | [《国产零零漆》](https://github.com/yihong0618/2023/issues/9#issuecomment-1402068288) | 2023-01-24 | 2023-01-24 | 
 | [《流浪地球2》](https://github.com/yihong0618/2023/issues/9#issuecomment-1407600386) | 2023-01-29 | 2023-01-29 | 
 | [《秒速五厘米》](https://github.com/yihong0618/2023/issues/9#issuecomment-1457248372) | 2023-03-07 | 2023-03-07 | 
+| [《铃芽之旅》](https://github.com/yihong0618/2023/issues/9#issuecomment-1500832263) | 2023-04-08 | 2023-04-08 | 
 
 <!--END_SECTION:my_movie-->
 
