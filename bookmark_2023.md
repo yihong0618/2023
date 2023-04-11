@@ -25,3 +25,4 @@
 | [Nas](https://blog.imalan.cn/archives/apple-tv-and-synology-ds220plus/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1489771367 | 2023-03-30 | 2023-03-30 | False |
 | [卧槽](http://hep.tsinghua.edu.cn/~orv/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1495312629 | 2023-04-04 | 2023-04-04 | False |
 | [PG](https://www.anbob.com/archives/6970.html) | https://github.com/yihong0618/2023/issues/4#issuecomment-1503385677 | 2023-04-11 | 2023-04-11 | False |
+| [GO 内存分配](https://www.linuxzen.com/go-memory-allocator-visual-guide.html) | https://github.com/yihong0618/2023/issues/4#issuecomment-1503410679 | 2023-04-11 | 2023-04-11 | False |
