@@ -191,3 +191,4 @@
 | [soulteary](https://soulteary.com/) | 2022.02.07 | DIY 神 | 向往 |
 | [7dot9](https://7dot9.com/) | 2022.02.26 | 前辈 | 梦在这里可以飞翔 |
 | [chrisdown](https://chrisdown.name/archive.html) | 2022.03.05 | SRE | Linux |
+| [thea](https://blog.thea.codes/) | 2022.04.11 | 好好看 | English |
