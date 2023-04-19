@@ -2,6 +2,10 @@
 
 今年的主题是内省。
 
+From one Friend WeChat
+![image](https://user-images.githubusercontent.com/15976103/233092062-5f232415-c412-4ff1-af09-8905abb72e36.png)
+
+
 ## 我的数字
 
 <!--START_SECTION:my_number-->
