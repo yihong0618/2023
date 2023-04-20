@@ -29,3 +29,4 @@
 | [Linux](https://github.com/lorenzo-stoakes/linux-vm-notes) | https://github.com/yihong0618/2023/issues/4#issuecomment-1504343894 | 2023-04-12 | 2023-04-12 | False |
 | [K8s](https://mihai-albert.com/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1504525126 | 2023-04-12 | 2023-04-12 | False |
 | [pg hacker](https://blog.anayrat.info/en/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1512338016 | 2023-04-18 | 2023-04-18 | False |
+| [RocksDB](https://artem.krylysov.com/blog/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1515604910 | 2023-04-20 | 2023-04-20 | False |
