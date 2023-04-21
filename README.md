@@ -195,6 +195,6 @@ From one Friend WeChat
 | [javabin](http://javabin.cn/archives/) | 2023.02.03 | hacker | 好 cool 的人 |
 | [soulteary](https://soulteary.com/) | 2023.02.07 | DIY 神 | 向往 |
 | [7dot9](https://7dot9.com/) | 2023.02.26 | 前辈 | 梦在这里可以飞翔 |
-| [chrisdown](https://chrisdown.name/archive.html) | 2022.03.05 | SRE | Linux |
+| [chrisdown](https://chrisdown.name/archive.html) | 2023.03.05 | SRE | Linux |
 | [thea](https://blog.thea.codes/) | 2023.04.11 | 好好看 | English |
 | [arthurchiao](https://arthurchiao.art/blog/bpf-advanced-notes-1-zh/) | 2023.04.12 | ebpf | 高产 |
