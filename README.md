@@ -189,12 +189,12 @@ From one Friend WeChat
 ## 收藏的博客
 | 博客名称 | 添加日期 | type | 备注 |
 | ------- | ------- | ---- | ---- |
-| [niyue](https://niyue.com/) | 2022.01.20 | 第一个 | 写 20 年博客的前辈 |
-| [Ryo](https://fanlv.fun/archives/) | 2022.01.29 | 底层 | 字节跳动 |
-| [baotiao](http://baotiao.github.io/) | 2022.01.31 | 数据库 | 做有积累的事情 |
-| [javabin](http://javabin.cn/archives/) | 2022.02.03 | hacker | 好 cool 的人 |
-| [soulteary](https://soulteary.com/) | 2022.02.07 | DIY 神 | 向往 |
-| [7dot9](https://7dot9.com/) | 2022.02.26 | 前辈 | 梦在这里可以飞翔 |
+| [niyue](https://niyue.com/) | 2023.01.20 | 第一个 | 写 20 年博客的前辈 |
+| [Ryo](https://fanlv.fun/archives/) | 2023.01.29 | 底层 | 字节跳动 |
+| [baotiao](http://baotiao.github.io/) | 2023.01.31 | 数据库 | 做有积累的事情 |
+| [javabin](http://javabin.cn/archives/) | 2023.02.03 | hacker | 好 cool 的人 |
+| [soulteary](https://soulteary.com/) | 2023.02.07 | DIY 神 | 向往 |
+| [7dot9](https://7dot9.com/) | 2023.02.26 | 前辈 | 梦在这里可以飞翔 |
 | [chrisdown](https://chrisdown.name/archive.html) | 2022.03.05 | SRE | Linux |
-| [thea](https://blog.thea.codes/) | 2022.04.11 | 好好看 | English |
-| [arthurchiao](https://arthurchiao.art/blog/bpf-advanced-notes-1-zh/) | 2022.04.12 | ebpf | 高产 |
+| [thea](https://blog.thea.codes/) | 2023.04.11 | 好好看 | English |
+| [arthurchiao](https://arthurchiao.art/blog/bpf-advanced-notes-1-zh/) | 2023.04.12 | ebpf | 高产 |
