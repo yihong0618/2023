@@ -30,3 +30,4 @@
 | [K8s](https://mihai-albert.com/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1504525126 | 2023-04-12 | 2023-04-12 | False |
 | [pg hacker](https://blog.anayrat.info/en/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1512338016 | 2023-04-18 | 2023-04-18 | False |
 | [RocksDB](https://artem.krylysov.com/blog/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1515604910 | 2023-04-20 | 2023-04-20 | False |
+| [栈地址](https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64) | https://github.com/yihong0618/2023/issues/4#issuecomment-1526906063 | 2023-04-28 | 2023-04-28 | False |
