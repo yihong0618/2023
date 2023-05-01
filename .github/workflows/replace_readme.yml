@@ -26,21 +26,12 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.10'
-      - name: Configure pip cache
-        uses: actions/cache@v1
-        id: pip-cache
-        with:
-          path: venv
-          key: pip-1-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            pip-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           python -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
-        if: steps.pip-cache.outputs.cache-hit != 'true'
       - name: Replace README
         run: |
           source venv/bin/activate
@@ -58,4 +49,3 @@ jobs:
           git add .
           git commit -m "generated readme" || echo "no need to commit "
           git push || echo "no file change"
-
