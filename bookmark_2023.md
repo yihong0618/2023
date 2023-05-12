@@ -32,3 +32,4 @@
 | [RocksDB](https://artem.krylysov.com/blog/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1515604910 | 2023-04-20 | 2023-04-20 | False |
 | [栈地址](https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64) | https://github.com/yihong0618/2023/issues/4#issuecomment-1526906063 | 2023-04-28 | 2023-04-28 | False |
 | [gdb](https://evilpan.com/2020/09/13/gdb-tips/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1542308712 | 2023-05-10 | 2023-05-10 | False |
+| [逆向](https://curz0n.github.io/2019/12/24/js-decrypt/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1545481054 | 2023-05-12 | 2023-05-12 | False |
