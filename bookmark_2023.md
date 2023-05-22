@@ -34,3 +34,4 @@
 | [gdb](https://evilpan.com/2020/09/13/gdb-tips/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1542308712 | 2023-05-10 | 2023-05-10 | False |
 | [逆向](https://curz0n.github.io/2019/12/24/js-decrypt/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1545481054 | 2023-05-12 | 2023-05-12 | False |
 | [subplan](https://blog.hidva.com/2020/07/06/pg-subplan-rescan/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1547098848 | 2023-05-15 | 2023-05-15 | False |
+| [100 gdb tips](https://github.com/hellogcc/100-gdb-tips/blob/master/src/index.md) | https://github.com/yihong0618/2023/issues/4#issuecomment-1557114802 | 2023-05-22 | 2023-05-22 | False |
