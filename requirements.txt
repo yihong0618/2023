@@ -3,4 +3,5 @@ requests
 pendulum
 rich
 openai
-BingImageCreator
+git+https://github.com/acheong08/BingImageCreator.git
+
