@@ -16,6 +16,7 @@ class TimelineRunner(BaseRunner):
     timeline
     - [x] add new
     - [x] list
+    - [ ] skip ai answer
     """
 
     def __init__(self):
@@ -30,6 +31,7 @@ class TimelineRunner(BaseRunner):
         self.timeline_issue = timeline_issues[0]
         self.show_day = "all"
         self.history = []  # for openai ask with history
+        self.with_ai = False
 
     def show(self):
         comments = self.timeline_issue.get_comments()
@@ -88,7 +90,7 @@ class TimelineRunner(BaseRunner):
                     query = query.split(":")[-1]
                     self.history.append([query, answer])
 
-    def add(self, timeline_string):
+    def add(self, timeline_string, skip_ai=False):
         # do the add
         comments = list(self.timeline_issue.get_comments())
         time_now_string = str(pendulum.now().time())[:8]
@@ -104,30 +106,35 @@ class TimelineRunner(BaseRunner):
                 .in_timezone(TIMEZONE)
                 .to_date_string()
             ):
-                # make history first
-                self._make_history(last_comment.body)
-                gpt_res = self._make_res(timeline_string)
-                timeline_string = last_comment.body + "\r\n" + timeline_string
-                last_comment.edit(body=timeline_string + "\r\n" + gpt_res)
+                if self.with_ai:
+                    # make history first
+                    self._make_history(last_comment.body)
+                    gpt_res = self._make_res(timeline_string)
+                    timeline_string = (
+                        last_comment.body + "\r\n" + timeline_string + "\r\n" + gpt_res
+                    )
+                else:
+                    timeline_string = last_comment.body + "\r\n" + timeline_string
+                last_comment.edit(body=timeline_string)
             else:
                 # TODO refactor this
-                completion = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "user", "content": f"{PROMPT}，{timeline_string}"}
-                    ],
-                )
-                res = (
-                    completion["choices"][0]
-                    .get("message")
-                    .get("content")
-                    .encode("utf8")
-                    .decode()
-                )
-                res = res.lstrip("\n").rstrip("\n")
-                self.timeline_issue.create_comment(
-                    body=timeline_string + "\r\n" + "> " + res + "\r\n"
-                )
+                if self.with_ai:
+                    completion = openai.ChatCompletion.create(
+                        model="gpt-3.5-turbo",
+                        messages=[
+                            {"role": "user", "content": f"{PROMPT}，{timeline_string}"}
+                        ],
+                    )
+                    res = (
+                        completion["choices"][0]
+                        .get("message")
+                        .get("content")
+                        .encode("utf8")
+                        .decode()
+                    )
+                    res = res.lstrip("\n").rstrip("\n")
+                    timeline_string = timeline_string + "\r\n" + "> " + res + "\r\n"
+                self.timeline_issue.create_comment(body=timeline_string)
 
         print("After add the timeline, now timeline")
         self.show()

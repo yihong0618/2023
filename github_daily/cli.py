@@ -130,6 +130,13 @@ def main():
         type=str,
         help="timeline to add",
     )
+    timeline.add_argument(
+        "-wa",
+        "--with_ai",
+        dest="with_ai",
+        action="store_true",
+        help="if answer with ai",
+    )
     timeline.set_defaults(runner=TimelineRunner)
     ########### Pushup RUNNER ###########
     pushup = subparser.add_parser(name="pushup")
@@ -171,6 +178,8 @@ def main():
                 runner.sync()
         case "idea" | "read" | "timeline" | "pushup":
             if args.add:
+                if args.with_ai:
+                    runner.with_ai = args.with_ai
                 runner.add(args.add)
         case _:
             print("Not support for now")
