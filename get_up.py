@@ -73,7 +73,7 @@ def make_get_up_message(bing_cookie):
     sentence_en = (
         completion["choices"][0].get("message").get("content").encode("utf8").decode()
     )
-    sentence_en = sentence_en + "Chinese art style 4k"
+    sentence_en = sentence_en + "Chinese Ancient Poems art style 4k"
     link = make_pic_and_save(sentence_en, bing_cookie)
     body = GET_UP_MESSAGE_TEMPLATE.format(
         get_up_time=get_up_time, sentence=sentence, link=link
