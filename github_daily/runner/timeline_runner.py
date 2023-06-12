@@ -37,7 +37,9 @@ class TimelineRunner(BaseRunner):
         comments = self.timeline_issue.get_comments()
         table = Table(title=f"My Timeline {datetime.now().year}")
         table.add_column("Timeline Day", style="cyan", no_wrap=True)
-        table.add_column("Timeline Content", justify="left", style="green", overflow="fold")
+        table.add_column(
+            "Timeline Content", justify="left", style="green", overflow="fold"
+        )
         if not comments:
             print("No timeline this year for now, go go go to create one")
         for comment in comments:
