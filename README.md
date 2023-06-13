@@ -178,6 +178,7 @@ From one Friend WeChat
 | [《灌篮高手》](https://github.com/yihong0618/2023/issues/9#issuecomment-1563733152) | 2023-05-26 | 2023-05-26 | 
 | [《疾速追杀4》](https://github.com/yihong0618/2023/issues/9#issuecomment-1565193212) | 2023-05-27 | 2023-05-27 | 
 | [《蜘蛛侠纵横宇宙》](https://github.com/yihong0618/2023/issues/9#issuecomment-1586464490) | 2023-06-12 | 2023-06-12 | 
+| [《蜘蛛侠平行宇宙》](https://github.com/yihong0618/2023/issues/9#issuecomment-1589387846) | 2023-06-13 | 2023-06-13 | 
 
 <!--END_SECTION:my_movie-->
 
