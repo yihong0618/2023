@@ -14,7 +14,7 @@ GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起�
 SENTENCE_API = "https://v1.jinrishici.com/all"
 DEFAULT_SENTENCE = "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n"
 TIMEZONE = "Asia/Shanghai"
-PROMPT = "请帮我把这个句子 `{sentence}` 翻译成英语，请翻译的有诗意一点儿。"
+PROMPT = "请帮我把这个句子 `{sentence}` 翻译成英语，请按描述绘画的方式翻译，只返回翻译后的句子"
 
 
 def login(token):
