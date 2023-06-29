@@ -56,7 +56,7 @@ def make_pic_and_save(sentence_en, bing_cookie):
     if not os.path.exists(new_path):
         os.mkdir(new_path)
     # download count = 4
-    i.save_images(images, 4, new_path)
+    i.save_images(images, new_path)
     return random.choice(images)
 
 
