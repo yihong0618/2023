@@ -154,6 +154,7 @@ From one Friend WeChat
 | [《火凤燎原》](https://github.com/yihong0618/2023/issues/6#issuecomment-1537439860) | 2023-05-07 | 2023-05-07 | 
 | [《狂飙》](https://github.com/yihong0618/2023/issues/6#issuecomment-1563732879) | 2023-05-26 | 2023-05-26 | 
 | [《回忆爱玛侬》](https://github.com/yihong0618/2023/issues/6#issuecomment-1606355402) | 2023-06-26 | 2023-06-26 | 
+| [《玻璃塔谜案》](https://github.com/yihong0618/2023/issues/6#issuecomment-1613931768) | 2023-06-29 | 2023-06-29 | 
 
 <!--END_SECTION:my_read-->
 
