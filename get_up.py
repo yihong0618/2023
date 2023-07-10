@@ -79,6 +79,11 @@ def make_get_up_message(bing_cookie):
         link = make_pic_and_save(sentence_en, bing_cookie)
     except Exception as e:
         print(str(e))
+        # give it a second chance
+        try:
+            link = make_pic_and_save(sentence_en, bing_cookie)
+        except Exception as e:
+            print(str(e))
     body = GET_UP_MESSAGE_TEMPLATE.format(
         get_up_time=get_up_time, sentence=sentence, link=link
     )
