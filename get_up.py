@@ -49,6 +49,8 @@ def make_pic_and_save(sentence_en, bing_cookie):
     """
     return the link for md
     """
+    # do not add text on the png
+    sentence_en = sentence_en + ", textless"
     i = ImageGen(bing_cookie)
     images = i.get_images(sentence_en)
     date_str = pendulum.now().to_date_string()
