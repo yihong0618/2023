@@ -1,16 +1,16 @@
 import argparse
 import os
+import random
 
+import openai
 import pendulum
 import requests
-from github import Github
-import random
-import openai
 from BingImageCreator import ImageGen
+from github import Github
 
 # 14 for test 12 real get up
 GET_UP_ISSUE_NUMBER = 12
-GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦，喝杯咖啡，背个单词，去跑步。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n  ![image]({link})"
+GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦，喝杯咖啡，背个单词，去跑步。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n"
 SENTENCE_API = "https://v1.jinrishici.com/all"
 DEFAULT_SENTENCE = "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n"
 TIMEZONE = "Asia/Shanghai"
@@ -89,8 +89,8 @@ def make_get_up_message(bing_cookie):
     body = GET_UP_MESSAGE_TEMPLATE.format(
         get_up_time=get_up_time, sentence=sentence, link=link
     )
-    print(body)
-    return body, is_get_up_early
+    print(body, link)
+    return body, is_get_up_early, link
 
 
 def main(
@@ -99,26 +99,28 @@ def main(
     u = login(github_token)
     repo = u.get_repo(repo_name)
     issue = repo.get_issue(GET_UP_ISSUE_NUMBER)
-    is_toady = get_today_get_up_status(issue)
-    if is_toady:
+    is_today = get_today_get_up_status(issue)
+    if is_today:
         print("Today I have recorded the wake up time")
         return
-    early_message, is_get_up_early = make_get_up_message(bing_cookie)
+    early_message, is_get_up_early, link = make_get_up_message(bing_cookie)
     body = early_message
     if weather_message:
         weather_message = f"现在的天气是{weather_message}\n"
         body = weather_message + early_message
     if is_get_up_early:
-        issue.create_comment(body)
+        comment = body + f"![image]({link})"
+        issue.create_comment(comment)
         # send to telegram
         if tele_token and tele_chat_id:
             requests.post(
                 url="https://api.telegram.org/bot{0}/{1}".format(
-                    tele_token, "sendMessage"
+                    tele_token, "sendPhoto"
                 ),
                 data={
                     "chat_id": tele_chat_id,
-                    "text": body,
+                    "photo": link,
+                    "caption": body,
                 },
             )
     else:
