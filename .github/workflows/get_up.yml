@@ -36,11 +36,11 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
         if: steps.pip-cache.outputs.cache-hit != 'true'
-      
+
       - name: GET UP
         run: |
           source venv/bin/activate
-          python get_up.py ${{ secrets.G_T }} ${{ github.repository }} --weather_message ": ${{ github.event.inputs.message }}" --bing_cookie ${{ secrets.BING_COOKIE }}
+          python get_up.py ${{ secrets.G_T }} ${{ github.repository }} --weather_message ": ${{ github.event.inputs.message }}" --bing_cookie ${{ secrets.BING_COOKIE }} --tele_token ${{ secrets.TG_TOKEN }} --tele_chat_id ${{ secrets.TG_CHAT_ID }}
 
       - name: Push New Pic
         run: |
