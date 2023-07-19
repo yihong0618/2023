@@ -58,6 +58,7 @@ def make_pic_and_save(sentence_en, bing_cookie, bard_token):
     images = i.get_images(sentence_en)
     date_str = pendulum.now().to_date_string()
     new_path = os.path.join("OUT_DIR", date_str)
+    bard_explain = ""
     if not os.path.exists(new_path):
         os.mkdir(new_path)
     # download count = 4
@@ -68,9 +69,11 @@ def make_pic_and_save(sentence_en, bing_cookie, bard_token):
             bard = Bard(token=bard_token)
             bard_answer = bard.ask_about_image(BARD_IMAGE_PROMPT, f.read())
             print(bard_answer['content'])
+            bard_explain = bard_answer['content']
+            
     except Exception as e:
         print(str(e))
-    return images[index]
+    return images[index], bard_explain
 
 
 def make_get_up_message(bing_cookie, bard_token):
@@ -88,24 +91,27 @@ def make_get_up_message(bing_cookie, bard_token):
         completion["choices"][0].get("message").get("content").encode("utf8").decode()
     )
     link = ""
+    bard_explain = ""
     try:
-        link = make_pic_and_save(sentence_en, bing_cookie, bard_token)
+        link, bard_explain = make_pic_and_save(sentence_en, bing_cookie, bard_token)
     except Exception as e:
         print(str(e))
         # give it a second chance
         try:
-            link = make_pic_and_save(sentence_en, bing_cookie, bard_token)
+            link, bard_explain = make_pic_and_save(sentence_en, bing_cookie, bard_token)
         except Exception as e:
             print(str(e))
     body = GET_UP_MESSAGE_TEMPLATE.format(
         get_up_time=get_up_time, sentence=sentence, link=link
     )
+    if bard_explain:
+        body = body + "\n" + "Bard: \n" + bard_explain
     print(body, link)
     return body, is_get_up_early, link
 
 
 def main(
-    github_token, repo_name, weather_message, bing_cookie, tele_token, bard_token, tele_chat_id
+    github_token, repo_name, weather_message, bing_cookie, bard_token, tele_token, tele_chat_id
 ):
     u = login(github_token)
     repo = u.get_repo(repo_name)
