@@ -130,16 +130,17 @@ def main(
         issue.create_comment(comment)
         # send to telegram
         if tele_token and tele_chat_id:
-            requests.post(
-                url="https://api.telegram.org/bot{0}/{1}".format(
-                    tele_token, "sendPhoto"
-                ),
-                data={
-                    "chat_id": tele_chat_id,
-                    "photo": link,
-                    "caption": body,
-                },
-            )
+            pass
+            # requests.post(
+            #     url="https://api.telegram.org/bot{0}/{1}".format(
+            #         tele_token, "sendPhoto"
+            #     ),
+            #     data={
+            #         "chat_id": tele_chat_id,
+            #         "photo": link,
+            #         "caption": body,
+            #     },
+            # )
     else:
         print("You wake up late")
 
