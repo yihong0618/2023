@@ -63,11 +63,13 @@ def make_pic_and_save(sentence_en, bing_cookie, bard_token):
     # download count = 4
     i.save_images(images, new_path)
     index = random.randint(0, 3)
-    with open(os.path.join(new_path, str(index)+ ".jpeg"), "rb") as f:
-
-        bard = Bard(token=bard_token)
-        bard_answer = bard.ask_about_image(BARD_IMAGE_PROMPT, f.read())
-        print(bard_answer['content'])
+    try:
+        with open(os.path.join(new_path, str(index)+ ".jpeg"), "rb") as f:
+            bard = Bard(token=bard_token)
+            bard_answer = bard.ask_about_image(BARD_IMAGE_PROMPT, f.read())
+            print(bard_answer['content'])
+    except Exception as e:
+        print(str(e))
     return images[index]
 
 
@@ -122,17 +124,16 @@ def main(
         issue.create_comment(comment)
         # send to telegram
         if tele_token and tele_chat_id:
-            pass
-            # requests.post(
-            #     url="https://api.telegram.org/bot{0}/{1}".format(
-            #         tele_token, "sendPhoto"
-            #     ),
-            #     data={
-            #         "chat_id": tele_chat_id,
-            #         "photo": link,
-            #         "caption": body,
-            #     },
-            # )
+            requests.post(
+                url="https://api.telegram.org/bot{0}/{1}".format(
+                    tele_token, "sendPhoto"
+                ),
+                data={
+                    "chat_id": tele_chat_id,
+                    "photo": link,
+                    "caption": body,
+                },
+            )
     else:
         print("You wake up late")
 
