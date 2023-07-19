@@ -7,14 +7,17 @@ import pendulum
 import requests
 from BingImageCreator import ImageGen
 from github import Github
+from bardapi import Bard
+
 
 # 14 for test 12 real get up
-GET_UP_ISSUE_NUMBER = 12
+GET_UP_ISSUE_NUMBER = 20
 GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦，喝杯咖啡，背个单词，去跑步。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n"
 SENTENCE_API = "https://v1.jinrishici.com/all"
 DEFAULT_SENTENCE = "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n"
 TIMEZONE = "Asia/Shanghai"
 PROMPT = "请帮我把这个句子 `{sentence}` 翻译成英语，请按描述绘画的方式翻译，只返回翻译后的句子"
+BARD_IMAGE_PROMPT = "Write me a line from an old Chinese poem based on this picture. only return this line in simplified Chinese."
 
 
 def login(token):
@@ -45,7 +48,7 @@ def get_today_get_up_status(issue):
     return is_today
 
 
-def make_pic_and_save(sentence_en, bing_cookie):
+def make_pic_and_save(sentence_en, bing_cookie, bard_token):
     """
     return the link for md
     """
@@ -59,14 +62,20 @@ def make_pic_and_save(sentence_en, bing_cookie):
         os.mkdir(new_path)
     # download count = 4
     i.save_images(images, new_path)
-    return random.choice(images)
+    index = random.randint(0, 3)
+    with open(os.path.join(new_path, str(index)+ ".jpeg"), "rb") as f:
+
+        bard = Bard(token=bard_token)
+        bard_answer = bard.ask_about_image(BARD_IMAGE_PROMPT, f.read())
+        print(bard_answer['content'])
+    return images[index]
 
 
-def make_get_up_message(bing_cookie):
+def make_get_up_message(bing_cookie, bard_token):
     sentence = get_one_sentence()
     now = pendulum.now(TIMEZONE)
     # 3 - 7 means early for me
-    is_get_up_early = 3 <= now.hour <= 22
+    is_get_up_early = 0 <= now.hour <= 25
     get_up_time = now.to_datetime_string()
     ms = [{"role": "user", "content": PROMPT.format(sentence=sentence)}]
     completion = openai.ChatCompletion.create(
@@ -78,12 +87,12 @@ def make_get_up_message(bing_cookie):
     )
     link = ""
     try:
-        link = make_pic_and_save(sentence_en, bing_cookie)
+        link = make_pic_and_save(sentence_en, bing_cookie, bard_token)
     except Exception as e:
         print(str(e))
         # give it a second chance
         try:
-            link = make_pic_and_save(sentence_en, bing_cookie)
+            link = make_pic_and_save(sentence_en, bing_cookie, bard_token)
         except Exception as e:
             print(str(e))
     body = GET_UP_MESSAGE_TEMPLATE.format(
@@ -94,7 +103,7 @@ def make_get_up_message(bing_cookie):
 
 
 def main(
-    github_token, repo_name, weather_message, bing_cookie, tele_token, tele_chat_id
+    github_token, repo_name, weather_message, bing_cookie, tele_token, bard_token, tele_chat_id
 ):
     u = login(github_token)
     repo = u.get_repo(repo_name)
@@ -103,7 +112,7 @@ def main(
     if is_today:
         print("Today I have recorded the wake up time")
         return
-    early_message, is_get_up_early, link = make_get_up_message(bing_cookie)
+    early_message, is_get_up_early, link = make_get_up_message(bing_cookie, bard_token)
     body = early_message
     if weather_message:
         weather_message = f"现在的天气是{weather_message}\n"
@@ -113,16 +122,17 @@ def main(
         issue.create_comment(comment)
         # send to telegram
         if tele_token and tele_chat_id:
-            requests.post(
-                url="https://api.telegram.org/bot{0}/{1}".format(
-                    tele_token, "sendPhoto"
-                ),
-                data={
-                    "chat_id": tele_chat_id,
-                    "photo": link,
-                    "caption": body,
-                },
-            )
+            pass
+            # requests.post(
+            #     url="https://api.telegram.org/bot{0}/{1}".format(
+            #         tele_token, "sendPhoto"
+            #     ),
+            #     data={
+            #         "chat_id": tele_chat_id,
+            #         "photo": link,
+            #         "caption": body,
+            #     },
+            # )
     else:
         print("You wake up late")
 
@@ -138,6 +148,9 @@ if __name__ == "__main__":
         "--bing_cookie", help="bing_cookie", nargs="?", default="", const=""
     )
     parser.add_argument(
+        "--bard_token", help="bing_cookie", nargs="?", default="", const=""
+    )
+    parser.add_argument(
         "--tele_token", help="tele_token", nargs="?", default="", const=""
     )
     parser.add_argument(
@@ -149,6 +162,7 @@ if __name__ == "__main__":
         options.repo_name,
         options.weather_message,
         options.bing_cookie,
+        options.bard_token,
         options.tele_token,
         options.tele_chat_id,
     )
