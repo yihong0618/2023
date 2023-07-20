@@ -11,7 +11,7 @@ from bardapi import Bard
 
 
 # 14 for test 12 real get up
-GET_UP_ISSUE_NUMBER = 12 
+GET_UP_ISSUE_NUMBER = 12
 GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦，喝杯咖啡，背个单词，去跑步。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n"
 SENTENCE_API = "https://v1.jinrishici.com/all"
 DEFAULT_SENTENCE = "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n"
@@ -65,12 +65,12 @@ def make_pic_and_save(sentence_en, bing_cookie, bard_token):
     i.save_images(images, new_path)
     index = random.randint(0, 3)
     try:
-        with open(os.path.join(new_path, str(index)+ ".jpeg"), "rb") as f:
+        with open(os.path.join(new_path, str(index) + ".jpeg"), "rb") as f:
             bard = Bard(token=bard_token)
             bard_answer = bard.ask_about_image(BARD_IMAGE_PROMPT, f.read())
-            print(bard_answer['content'])
-            bard_explain = bard_answer['content']
-            
+            print(bard_answer["content"])
+            bard_explain = bard_answer["content"]
+
     except Exception as e:
         print(str(e))
     return images[index], bard_explain
@@ -111,7 +111,13 @@ def make_get_up_message(bing_cookie, bard_token):
 
 
 def main(
-    github_token, repo_name, weather_message, bing_cookie, bard_token, tele_token, tele_chat_id
+    github_token,
+    repo_name,
+    weather_message,
+    bing_cookie,
+    bard_token,
+    tele_token,
+    tele_chat_id,
 ):
     u = login(github_token)
     repo = u.get_repo(repo_name)
