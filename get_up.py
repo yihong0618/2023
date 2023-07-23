@@ -104,10 +104,11 @@ def make_get_up_message(bing_cookie, bard_token):
     body = GET_UP_MESSAGE_TEMPLATE.format(
         get_up_time=get_up_time, sentence=sentence, link=link
     )
+    body_explain = ""
     if bard_explain:
-        body = body + "\n" + "Bard: \n" + bard_explain
+        body_explain = "Bard: \n" + bard_explain
     print(body, link)
-    return body, is_get_up_early, link
+    return body, body_explain, is_get_up_early, link
 
 
 def main(
@@ -126,13 +127,15 @@ def main(
     if is_today:
         print("Today I have recorded the wake up time")
         return
-    early_message, is_get_up_early, link = make_get_up_message(bing_cookie, bard_token)
+    early_message, body_explain, is_get_up_early, link = make_get_up_message(
+        bing_cookie, bard_token
+    )
     body = early_message
     if weather_message:
         weather_message = f"现在的天气是{weather_message}\n"
         body = weather_message + early_message
     if is_get_up_early:
-        comment = body + f"![image]({link})"
+        comment = body + f"![image]({link})" + "\n" + body_explain
         issue.create_comment(comment)
         # send to telegram
         if tele_token and tele_chat_id:
@@ -142,7 +145,7 @@ def main(
                 ),
                 data={
                     "chat_id": tele_chat_id,
-                    "photo": link,
+                    "photo": link or "https://pp.qianp.com/zidian/kai/27/65e9.png",
                     "caption": body,
                 },
             )
