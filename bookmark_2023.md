@@ -38,3 +38,4 @@
 | [book](https://leapbook.readthedocs.io/en/latest/index.html) | https://github.com/yihong0618/2023/issues/4#issuecomment-1590579072 | 2023-06-14 | 2023-06-14 | False |
 | [extensions](http://liuyangming.tech/08-2018/extension-dev.html) | https://github.com/yihong0618/2023/issues/4#issuecomment-1591182126 | 2023-06-14 | 2023-06-14 | False |
 | [again](https://arthurchiao.art/articles-zh/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1597228796 | 2023-06-19 | 2023-06-19 | False |
+| [pg extensions](https://csblog.cc/dbnotes/PostgreSQL%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91.html) | https://github.com/yihong0618/2023/issues/4#issuecomment-1647090855 | 2023-07-24 | 2023-07-24 | False |
