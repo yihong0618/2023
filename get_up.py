@@ -98,6 +98,20 @@ def make_get_up_message(bing_cookie, bard_token):
         print(str(e))
         # give it a second chance
         try:
+            sentence = get_one_sentence()
+            print(f"Second: {sentence}")
+            ms = [{"role": "user", "content": PROMPT.format(sentence=sentence)}]
+            completion = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=ms,
+            )
+            sentence_en = (
+                completion["choices"][0]
+                .get("message")
+                .get("content")
+                .encode("utf8")
+                .decode()
+            )
             link, bard_explain = make_pic_and_save(sentence_en, bing_cookie, bard_token)
         except Exception as e:
             print(str(e))
