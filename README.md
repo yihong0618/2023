@@ -189,6 +189,7 @@ From one Friend WeChat
 | [《蜘蛛侠平行宇宙》](https://github.com/yihong0618/2023/issues/9#issuecomment-1589387846) | 2023-06-13 | 2023-06-13 | 
 | [《闪电侠》](https://github.com/yihong0618/2023/issues/9#issuecomment-1606380858) | 2023-06-26 | 2023-06-26 | 
 | [《长安三万里》](https://github.com/yihong0618/2023/issues/9#issuecomment-1647596991) | 2023-07-24 | 2023-07-24 | 
+| [《疯狂的石头》](https://github.com/yihong0618/2023/issues/9#issuecomment-1657060294) | 2023-07-30 | 2023-07-30 | 
 
 <!--END_SECTION:my_movie-->
 
