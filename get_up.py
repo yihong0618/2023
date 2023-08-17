@@ -48,13 +48,13 @@ def get_today_get_up_status(issue):
     return is_today
 
 
-def make_pic_and_save(sentence_en, bing_cookie, bard_token):
+def make_pic_and_save(sentence_en, bing_cookie, bing_cookie_SRCHHPGUSR, bard_token):
     """
     return the link for md
     """
     # do not add text on the png
     sentence_en = sentence_en + ", textless"
-    i = ImageGen(bing_cookie)
+    i = ImageGen(bing_cookie, bing_cookie_SRCHHPGUSR)
     images = i.get_images(sentence_en)
     date_str = pendulum.now().to_date_string()
     new_path = os.path.join("OUT_DIR", date_str)
@@ -76,7 +76,7 @@ def make_pic_and_save(sentence_en, bing_cookie, bard_token):
     return images[index], bard_explain
 
 
-def make_get_up_message(bing_cookie, bard_token):
+def make_get_up_message(bing_cookie, bing_cookie_SRCHHPGUSR, bard_token):
     sentence = get_one_sentence()
     now = pendulum.now(TIMEZONE)
     # 3 - 7 means early for me
@@ -93,7 +93,9 @@ def make_get_up_message(bing_cookie, bard_token):
     link = ""
     bard_explain = ""
     try:
-        link, bard_explain = make_pic_and_save(sentence_en, bing_cookie, bard_token)
+        link, bard_explain = make_pic_and_save(
+            sentence_en, bing_cookie, bing_cookie_SRCHHPGUSR, bard_token
+        )
     except Exception as e:
         print(str(e))
         # give it a second chance
@@ -130,6 +132,7 @@ def main(
     repo_name,
     weather_message,
     bing_cookie,
+    bing_cookie_SRCHHPGUSR,
     bard_token,
     tele_token,
     tele_chat_id,
@@ -142,7 +145,7 @@ def main(
         print("Today I have recorded the wake up time")
         return
     early_message, body_explain, is_get_up_early, link = make_get_up_message(
-        bing_cookie, bard_token
+        bing_cookie, bing_cookie_SRCHHPGUSR, bard_token
     )
     body = early_message
     if weather_message:
@@ -178,6 +181,13 @@ if __name__ == "__main__":
         "--bing_cookie", help="bing_cookie", nargs="?", default="", const=""
     )
     parser.add_argument(
+        "--bing_cookie_SRCHHPGUSR",
+        help="bing_cookie_SRCHHPGUSR",
+        nargs="?",
+        default="",
+        const="",
+    )
+    parser.add_argument(
         "--bard_token", help="bing_cookie", nargs="?", default="", const=""
     )
     parser.add_argument(
@@ -192,6 +202,7 @@ if __name__ == "__main__":
         options.repo_name,
         options.weather_message,
         options.bing_cookie,
+        options.bing_cookie_SRCHHPGUSR,
         options.bard_token,
         options.tele_token,
         options.tele_chat_id,

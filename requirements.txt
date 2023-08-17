@@ -3,5 +3,5 @@ requests
 pendulum
 rich
 openai
-BingImageCreator==0.4.4
+git+https://github.com/yihong0618/BingImageCreator.git
 git+https://github.com/yihong0618/Bard-API.git
