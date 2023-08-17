@@ -40,7 +40,7 @@ jobs:
       - name: GET UP
         run: |
           source venv/bin/activate
-          python get_up.py ${{ secrets.G_T }} ${{ github.repository }} --weather_message ": ${{ github.event.inputs.message }}" --bing_cookie ${{ secrets.BING_COOKIE }} --bing_cookie_SRCHHPGUSR ${{ secrets.BING_COOKIE_SRCHHPGUSR }}  --bard_token "${{ secrets.BARD_TOKEN }}" --tele_token ${{ secrets.TG_TOKEN }} --tele_chat_id ${{ secrets.TG_CHAT_ID }}
+          python get_up.py ${{ secrets.G_T }} ${{ github.repository }} --weather_message ": ${{ github.event.inputs.message }}" --bing_cookie ${{ secrets.BING_COOKIE }} --bing_cookie_SRCHHPGUSR "${{ secrets.BING_COOKIE_SRCHHPGUSR }}" --bard_token "${{ secrets.BARD_TOKEN }}" --tele_token ${{ secrets.TG_TOKEN }} --tele_chat_id ${{ secrets.TG_CHAT_ID }}
 
       - name: Push New Pic
         run: |
