@@ -3,5 +3,3 @@ requests
 pendulum
 rich
 openai
-git+https://github.com/yihong0618/BingImageCreator.git
-git+https://github.com/yihong0618/Bard-API.git
