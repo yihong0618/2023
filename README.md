@@ -232,5 +232,5 @@ From one Friend WeChat
 | [arthurchiao](https://arthurchiao.art/blog/bpf-advanced-notes-1-zh/) | 2023.04.12 | ebpf | 高产 |
 | [海街日记](https://sea-st.eu.org/) | 2023.06.26 | 诗 | 卧槽，我太喜欢这人的文字了 |
 | [oimo.io](https://oimo.io/) | 2023.08.07 | 日语 | 我直接呆住了 |
-
+| [拾月]([https://www.skyue.com/archives.html) | 2023.08.24 | 细腻的人 | 文笔真好 |
 
