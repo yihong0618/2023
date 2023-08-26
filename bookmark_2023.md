@@ -42,3 +42,4 @@
 | [linux ](https://xinqiu.gitbooks.io/linux-insides-cn/content/index.html) | https://github.com/yihong0618/2023/issues/4#issuecomment-1652787758 | 2023-07-27 | 2023-07-27 | False |
 | [ebpf](https://asphaltt.github.io/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1667220790 | 2023-08-07 | 2023-08-07 | False |
 | [DB](https://github.com/spandanb/learndb-py) | https://github.com/yihong0618/2023/issues/4#issuecomment-1677079250 | 2023-08-14 | 2023-08-14 | False |
+| [debug](https://seealso.cn/post/linux-gdb-principle-ptrace?continueFlag=cd9be6edc56bfb72f6d0dc908d439184) | https://github.com/yihong0618/2023/issues/4#issuecomment-1694192839 | 2023-08-26 | 2023-08-26 | False |
