@@ -66,8 +66,8 @@ def make_pic_and_save(sentence):
         with open(os.path.join(new_path, f"{index}.jpeg"), "wb") as output_file:
             for chunk in response.iter_content(chunk_size=8192):
                 output_file.write(chunk)
-    image_url = f"https://github.com/yihong0618/2023/blob/main/OUT_DIR/{date_str}/{index}.jpeg?raw=true"
-    return image_url
+    image_url_for_issue = f"https://github.com/yihong0618/2023/blob/main/OUT_DIR/{date_str}/{index}.jpeg?raw=true"
+    return image_url, image_url_for_issue
 
 
 def make_get_up_message():
@@ -78,22 +78,21 @@ def make_get_up_message():
     get_up_time = now.to_datetime_string()
     link = ""
     try:
-        link = make_pic_and_save(sentence)
+        link, link_for_issue = make_pic_and_save(sentence)
     except Exception as e:
         print(str(e))
         # give it a second chance
         try:
             sentence = get_one_sentence()
             print(f"Second: {sentence}")
-            link = make_pic_and_save(sentence)
+            link, link_for_issue = make_pic_and_save(sentence)
         except Exception as e:
             print(str(e))
     body = GET_UP_MESSAGE_TEMPLATE.format(
         get_up_time=get_up_time, sentence=sentence, link=link
     )
-    body_explain = ""
-    print(body, link)
-    return body, body_explain, is_get_up_early, link
+    print(body, link, link_for_issue)
+    return body, is_get_up_early, link, link_for_issue
 
 
 def main(
@@ -110,13 +109,13 @@ def main(
     if is_today:
         print("Today I have recorded the wake up time")
         return
-    early_message, body_explain, is_get_up_early, link = make_get_up_message()
+    early_message, is_get_up_early, link, link_for_issue = make_get_up_message()
     body = early_message
     if weather_message:
         weather_message = f"现在的天气是{weather_message}\n"
         body = weather_message + early_message
     if is_get_up_early:
-        comment = body + f"![image]({link})" + "\n" + body_explain
+        comment = body + f"![image]({link_for_issue})"
         issue.create_comment(comment)
         # send to telegram
         if tele_token and tele_chat_id:
