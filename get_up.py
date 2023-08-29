@@ -66,6 +66,7 @@ def make_pic_and_save(sentence):
         with open(os.path.join(new_path, f"{index}.jpeg"), "wb") as output_file:
             for chunk in response.iter_content(chunk_size=8192):
                 output_file.write(chunk)
+    image_url = f"https://github.com/yihong0618/2023/blob/main/OUT_DIR/{date_str}/{index}.jpeg?raw=true"
     return image_url
 
 
