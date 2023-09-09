@@ -196,6 +196,7 @@ From one Friend WeChat
 | [《疯狂的石头》](https://github.com/yihong0618/2023/issues/9#issuecomment-1657060294) | 2023-07-30 | 2023-07-30 | 
 | [《记忆碎片》](https://github.com/yihong0618/2023/issues/9#issuecomment-1692548509) | 2023-08-24 | 2023-08-24 | 
 | [《奥本海默》](https://github.com/yihong0618/2023/issues/9#issuecomment-1704649336) | 2023-09-04 | 2023-09-04 | 
+| [《第八个嫌疑人》](https://github.com/yihong0618/2023/issues/9#issuecomment-1712473778) | 2023-09-09 | 2023-09-09 | 
 
 <!--END_SECTION:my_movie-->
 
