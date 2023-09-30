@@ -90,7 +90,7 @@ def make_blog_issues_str(since, issues):
     """
     comment_str = BLOG_ISSUE_STAT_HEAD
     for issue in issues:
-        if issue.created_at < since:
+        if issue.created_at.astimezone() < since.astimezone():
             continue
         comments = issue.get_comments()
         comments_count = len(list(comments))
