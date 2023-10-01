@@ -9,7 +9,7 @@ from BingImageCreator import ImageGen
 from github import Github
 
 # 20 for test 12 real get up
-GET_UP_ISSUE_NUMBER = 20
+GET_UP_ISSUE_NUMBER = 12
 GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦，喝杯咖啡，背个单词，去跑步。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n"
 SENTENCE_API = "https://v1.jinrishici.com/all"
 DEFAULT_SENTENCE = "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n"
@@ -101,7 +101,7 @@ def make_get_up_message(bing_cookie, up_list):
     sentence = get_one_sentence(up_list)
     now = pendulum.now(TIMEZONE)
     # 3 - 7 means early for me
-    is_get_up_early = 3 <= now.hour <= 24
+    is_get_up_early = 3 <= now.hour <= 8
     get_up_time = now.to_datetime_string()
     link = ""
     try:
@@ -148,7 +148,7 @@ def main(
         comment = body + f"![image]({link_for_issue})"
         issue.create_comment(comment)
         # send to telegram
-        if tele_token and tele_chat_id and False:
+        if tele_token and tele_chat_id:
             requests.post(
                 url="https://api.telegram.org/bot{0}/{1}".format(
                     tele_token, "sendPhoto"
