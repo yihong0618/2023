@@ -148,7 +148,7 @@ def main(
         comment = body + f"![image]({link_for_issue})"
         issue.create_comment(comment)
         # send to telegram
-        if tele_token and tele_chat_id:
+        if tele_token and tele_chat_id and False:
             requests.post(
                 url="https://api.telegram.org/bot{0}/{1}".format(
                     tele_token, "sendPhoto"
