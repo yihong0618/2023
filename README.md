@@ -199,6 +199,7 @@ From one Friend WeChat
 | [《记忆碎片》](https://github.com/yihong0618/2023/issues/9#issuecomment-1692548509) | 2023-08-24 | 2023-08-24 | 
 | [《奥本海默》](https://github.com/yihong0618/2023/issues/9#issuecomment-1704649336) | 2023-09-04 | 2023-09-04 | 
 | [《第八个嫌疑人》](https://github.com/yihong0618/2023/issues/9#issuecomment-1712473778) | 2023-09-09 | 2023-09-09 | 
+| [《坚如磐石》](https://github.com/yihong0618/2023/issues/9#issuecomment-1742839998) | 2023-10-02 | 2023-10-02 | 
 
 <!--END_SECTION:my_movie-->
 
