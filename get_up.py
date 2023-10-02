@@ -62,7 +62,7 @@ def make_pic_and_save(sentence):
     """
     # do not add text on the png
     sentence = sentence + ", textless"
-    date_str = pendulum.now().to_date_string()
+    date_str = pendulum.now(TIMEZONE).to_date_string()
     new_path = os.path.join("OUT_DIR", date_str)
     if not os.path.exists(new_path):
         os.mkdir(new_path)
