@@ -52,7 +52,6 @@ def get_today_get_up_status(issue):
         "Asia/Shanghai"
     )
     is_today = (latest_day.day == now.day) and (latest_day.month == now.month)
-    print(up_list)
     return is_today, up_list
 
 
@@ -101,7 +100,7 @@ def make_get_up_message(bing_cookie, up_list):
     sentence = get_one_sentence(up_list)
     now = pendulum.now(TIMEZONE)
     # 3 - 7 means early for me
-    is_get_up_early = 3 <= now.hour <= 8
+    is_get_up_early = 3 <= now.hour <= 24
     get_up_time = now.to_datetime_string()
     link = ""
     try:
