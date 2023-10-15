@@ -5,11 +5,13 @@ import random
 import openai
 import pendulum
 import requests
+import telebot
 from BingImageCreator import ImageGen
 from github import Github
+from telebot.types import InputMediaPhoto
 
 # 20 for test 12 real get up
-GET_UP_ISSUE_NUMBER = 12
+GET_UP_ISSUE_NUMBER = 20
 GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦，喝杯咖啡，背个单词，去跑步。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n"
 SENTENCE_API = "https://v1.jinrishici.com/all"
 DEFAULT_SENTENCE = "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n"
@@ -89,11 +91,10 @@ def make_pic_and_save(sentence, bing_cookie):
     new_path = os.path.join("OUT_DIR", date_str)
     if not os.path.exists(new_path):
         os.mkdir(new_path)
-    # download count = 4
     i.save_images(images, new_path)
     index = random.randint(0, len(images) - 1)
     image_url_for_issue = f"https://github.com/yihong0618/2023/blob/main/OUT_DIR/{date_str}/{index}.jpeg?raw=true"
-    return images[index], image_url_for_issue
+    return images, image_url_for_issue
 
 
 def make_get_up_message(bing_cookie, up_list):
@@ -102,23 +103,23 @@ def make_get_up_message(bing_cookie, up_list):
     # 3 - 7 means early for me
     is_get_up_early = 3 <= now.hour <= 24
     get_up_time = now.to_datetime_string()
-    link = ""
+    link_list = []
     try:
-        link, link_for_issue = make_pic_and_save(sentence, bing_cookie)
+        link_list, link_for_issue = make_pic_and_save(sentence, bing_cookie)
     except Exception as e:
         print(str(e))
         # give it a second chance
         try:
             sentence = get_one_sentence(up_list)
             print(f"Second: {sentence}")
-            link, link_for_issue = make_pic_and_save(sentence, bing_cookie)
+            link_list, link_for_issue = make_pic_and_save(sentence, bing_cookie)
         except Exception as e:
             print(str(e))
     body = GET_UP_MESSAGE_TEMPLATE.format(
         get_up_time=get_up_time, sentence=sentence, link=link
     )
-    print(body, link, link_for_issue)
-    return body, is_get_up_early, link, link_for_issue
+    print(body, link_list, link_for_issue)
+    return body, is_get_up_early, link_list, link_for_issue
 
 
 def main(
@@ -136,7 +137,7 @@ def main(
     if is_today:
         print("Today I have recorded the wake up time")
         return
-    early_message, is_get_up_early, link, link_for_issue = make_get_up_message(
+    early_message, is_get_up_early, link_list, link_for_issue = make_get_up_message(
         bing_cookie, up_list
     )
     body = early_message
@@ -148,16 +149,9 @@ def main(
         issue.create_comment(comment)
         # send to telegram
         if tele_token and tele_chat_id:
-            requests.post(
-                url="https://api.telegram.org/bot{0}/{1}".format(
-                    tele_token, "sendPhoto"
-                ),
-                data={
-                    "chat_id": tele_chat_id,
-                    "photo": link or "https://pp.qianp.com/zidian/kai/27/65e9.png",
-                    "caption": body,
-                },
-            )
+            bot = telebot.TeleBot(tele_token)
+            photos_list = [InputMediaPhoto(i, caption=body) for i in link_list]
+            bot.send_media_group(tele_chat_id, photos_list)
     else:
         print("You wake up late")
 

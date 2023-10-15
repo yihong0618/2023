@@ -4,4 +4,5 @@ pendulum
 rich
 openai
 git+https://github.com/yihong0618/BingImageCreator.git
+pyTelegramBotAPI
 
