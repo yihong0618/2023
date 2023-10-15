@@ -115,9 +115,7 @@ def make_get_up_message(bing_cookie, up_list):
             link_list, link_for_issue = make_pic_and_save(sentence, bing_cookie)
         except Exception as e:
             print(str(e))
-    body = GET_UP_MESSAGE_TEMPLATE.format(
-        get_up_time=get_up_time, sentence=sentence, link=link
-    )
+    body = GET_UP_MESSAGE_TEMPLATE.format(get_up_time=get_up_time, sentence=sentence)
     print(body, link_list, link_for_issue)
     return body, is_get_up_early, link_list, link_for_issue
 
