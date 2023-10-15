@@ -148,7 +148,8 @@ def main(
         # send to telegram
         if tele_token and tele_chat_id:
             bot = telebot.TeleBot(tele_token)
-            photos_list = [InputMediaPhoto(i, caption=body) for i in link_list]
+            photos_list = [InputMediaPhoto(i) for i in link_list]
+            photos_list[0].caption = body
             bot.send_media_group(tele_chat_id, photos_list)
     else:
         print("You wake up late")
