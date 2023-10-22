@@ -150,7 +150,7 @@ def main(
             bot = telebot.TeleBot(tele_token)
             photos_list = [InputMediaPhoto(i) for i in link_list]
             photos_list[0].caption = body
-            bot.send_media_group(tele_chat_id, photos_list)
+            bot.send_media_group(tele_chat_id, photos_list, disable_notification=True)
     else:
         print("You wake up late")
 
