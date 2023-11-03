@@ -45,3 +45,4 @@
 | [debug](https://seealso.cn/post/linux-gdb-principle-ptrace?continueFlag=cd9be6edc56bfb72f6d0dc908d439184) | https://github.com/yihong0618/2023/issues/4#issuecomment-1694192839 | 2023-08-26 | 2023-08-26 | False |
 | [go](https://www.aadhav.me/posts) | https://github.com/yihong0618/2023/issues/4#issuecomment-1755510527 | 2023-10-10 | 2023-10-10 | False |
 | [PL](https://softwarefoundations.cis.upenn.edu/) | https://github.com/yihong0618/2023/issues/4#issuecomment-1778383784 | 2023-10-25 | 2023-10-25 | False |
+| [开账户](https://qinyang.wang/create-ocbc-account) | https://github.com/yihong0618/2023/issues/4#issuecomment-1791813028 | 2023-11-03 | 2023-11-03 | False |
