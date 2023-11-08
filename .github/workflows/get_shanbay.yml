@@ -12,7 +12,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: install python 3.10 
         uses: actions/setup-python@v4
         with:
