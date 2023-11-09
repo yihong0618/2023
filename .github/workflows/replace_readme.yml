@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       test:
-        description: 'Test'
+        description: "Test"
         required: false
   issue_comment:
     types: [created]
@@ -14,7 +14,6 @@ env:
   GITHUB_EMAIL: zouzou0208@gmail.com
   BOOKMARK_ISSUE_ID: 4
 
-
 jobs:
   sync:
     name: Build
@@ -22,21 +21,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: install python 3.10 
+      - name: install python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
           cache: "pip" # caching pip dependencies
       - name: Replace README
         run: |
-          source venv/bin/activate
-          python main.py ${{ secrets.G_T }} ${{ github.repository }} --issue_numbe '${{ github.event.issue.number }}' --issue_label_name '${{ github.event.issue.labels[0].name }}' 
+          python main.py ${{ secrets.G_T }} ${{ github.repository }} --issue_numbe '${{ github.event.issue.number }}' --issue_label_name '${{ github.event.issue.labels[0].name }}'
         if: github.event.issue.number != ${{ env.BOOKMARK_ISSUE_ID }}
       - name: Make bookmark
         run: |
-          source venv/bin/activate
           python make_bookmark.py ${{ secrets.G_T }} ${{ github.repository }}
-        if:  github.event.issue.number == ${{ env.BOOKMARK_ISSUE_ID }}
+        if: github.event.issue.number == ${{ env.BOOKMARK_ISSUE_ID }}
       - name: Push README
         run: |
           git config --local user.email "action@github.com"
