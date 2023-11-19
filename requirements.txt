@@ -3,6 +3,6 @@ requests
 pendulum
 rich
 openai==0.27.2
-git+https://github.com/yihong0618/BingImageCreator.git
+BingImageCreator==0.7.0
 pyTelegramBotAPI
 
