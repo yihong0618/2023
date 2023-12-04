@@ -167,6 +167,7 @@ From one Friend WeChat
 | [《回忆爱玛侬》](https://github.com/yihong0618/2023/issues/6#issuecomment-1606355402) | 2023-06-26 | 2023-06-26 | 
 | [《玻璃塔谜案》](https://github.com/yihong0618/2023/issues/6#issuecomment-1613931768) | 2023-06-29 | 2023-06-29 | 
 | [《天涯明月刀》](https://github.com/yihong0618/2023/issues/6#issuecomment-1754833637) | 2023-10-10 | 2023-10-10 | 
+| [《涉过愤怒的海》](https://github.com/yihong0618/2023/issues/6#issuecomment-1837722504) | 2023-12-04 | 2023-12-04 | 
 
 <!--END_SECTION:my_read-->
 
