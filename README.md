@@ -204,6 +204,7 @@ From one Friend WeChat
 | [《第八个嫌疑人》](https://github.com/yihong0618/2023/issues/9#issuecomment-1712473778) | 2023-09-09 | 2023-09-09 | 
 | [《坚如磐石》](https://github.com/yihong0618/2023/issues/9#issuecomment-1742839998) | 2023-10-02 | 2023-10-02 | 
 | [《疯狂的赛车》](https://github.com/yihong0618/2023/issues/9#issuecomment-1763717875) | 2023-10-16 | 2023-10-16 | 
+| [《涉过愤怒的海》](https://github.com/yihong0618/2023/issues/9#issuecomment-1837722894) | 2023-12-04 | 2023-12-04 | 
 
 <!--END_SECTION:my_movie-->
 
