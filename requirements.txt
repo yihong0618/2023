@@ -2,7 +2,7 @@ PyGithub
 requests
 pendulum
 rich
-openai==0.27.2
-BingImageCreator-fork==0.7.3
+openai
+BingImageCreator-fork
 pyTelegramBotAPI
 

@@ -2,20 +2,23 @@ import argparse
 import os
 import random
 
-import openai
 import pendulum
 import requests
 import telebot
 from BingImageCreator import ImageGen
 from github import Github
+from openai import OpenAI
 from telebot.types import InputMediaPhoto
 
 # 20 for test 12 real get up
 GET_UP_ISSUE_NUMBER = 12
-GET_UP_MESSAGE_TEMPLATE = "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦，喝杯咖啡，背个单词，去跑步。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n"
+GET_UP_MESSAGE_TEMPLATE = (
+    "今天的起床时间是--{get_up_time}.\r\n\r\n 起床啦。\r\n\r\n 今天的一句诗:\r\n {sentence} \r\n"
+)
 SENTENCE_API = "https://v1.jinrishici.com/all"
 DEFAULT_SENTENCE = "赏花归去马如飞\r\n去马如飞酒力微\r\n酒力微醒时已暮\r\n醒时已暮赏花归\r\n"
 TIMEZONE = "Asia/Shanghai"
+client = OpenAI()
 
 
 def login(token):
@@ -57,35 +60,17 @@ def get_today_get_up_status(issue):
     return is_today, up_list
 
 
-def make_pic_and_save(sentence):
-    """
-    return the link for md
-    """
-    # do not add text on the png
-    sentence = sentence + ", textless"
-    date_str = pendulum.now(TIMEZONE).to_date_string()
-    new_path = os.path.join("OUT_DIR", date_str)
-    if not os.path.exists(new_path):
-        os.mkdir(new_path)
-    response = openai.Image.create(prompt=sentence, n=1, size="1024x1024")
-    image_url = response["data"][0]["url"]
-    s = requests.session()
-    index = 0
-    while os.path.exists(os.path.join(new_path, f"{index}.jpeg")):
-        index += 1
-    with s.get(image_url, stream=True) as response:
-        # save response to file
-        response.raise_for_status()
-        with open(os.path.join(new_path, f"{index}.jpeg"), "wb") as output_file:
-            for chunk in response.iter_content(chunk_size=8192):
-                output_file.write(chunk)
-    image_url_for_issue = f"https://github.com/yihong0618/2023/blob/main/OUT_DIR/{date_str}/{index}.jpeg?raw=true"
-    return image_url, image_url_for_issue
-
-
 def make_pic_and_save(sentence, bing_cookie):
     # for bing image when dall-e3 open drop this function
     i = ImageGen(bing_cookie)
+    prompt = f"revise `{sentence}` to a DALL-E prompt"
+    completion = client.chat.completions.create(
+        messages=[{"role": "user", "content": prompt}],
+        model="gpt-4-1106-preview",
+    )
+    sentence = completion.choices[0].message.content.encode("utf8").decode()
+    print(f"revies: {sentence}")
+
     images = i.get_images(sentence)
     date_str = pendulum.now().to_date_string()
     new_path = os.path.join("OUT_DIR", date_str)
@@ -100,8 +85,8 @@ def make_pic_and_save(sentence, bing_cookie):
 def make_get_up_message(bing_cookie, up_list):
     sentence = get_one_sentence(up_list)
     now = pendulum.now(TIMEZONE)
-    # 3 - 7 means early for me
-    is_get_up_early = 3 <= now.hour <= 24
+    # 3 - 8 means early for me
+    is_get_up_early = 3 <= now.hour <= 8
     get_up_time = now.to_datetime_string()
     link_list = []
     try:
