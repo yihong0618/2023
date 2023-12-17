@@ -31,7 +31,7 @@ def _get_cichang_streak(s, user_id, end_date=pendulum.now("Asia/Shanghai"), stre
     logs = data["data"]["studyCountDays"]
     if not logs:
         return streak
-    periods = list(pendulum.period(start_date, end_date.subtract(days=1)))
+    periods = list(pendulum.interval(start_date, end_date.subtract(days=1)))
     periods.sort(reverse=True)
 
     # cichang log data like [{'studyCount': 10, 'studyDate': '2021/02/09'}, {'studyCount': 20, 'studyDate': '2021/02/18'}]

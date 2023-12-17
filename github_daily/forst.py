@@ -180,7 +180,7 @@ class Forst:
         is_today_check = False
         if end_date.to_date_string() in self.log_days:
             is_today_check = True
-        periods = list(pendulum.period(start_date, end_date.subtract(days=1)))
+        periods = list(pendulum.interval(start_date, end_date.subtract(days=1)))
         periods.sort(reverse=True)
 
         # if today id done

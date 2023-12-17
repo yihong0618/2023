@@ -20,7 +20,7 @@ def _get_shanbay_streak(end_date=pendulum.now("Asia/Shanghai"), streak=0):
     logs = data["logs"]
     if not logs:
         return streak
-    periods = list(pendulum.period(start_date, end_date.subtract(days=1)))
+    periods = list(pendulum.interval(start_date, end_date.subtract(days=1)))
     periods.sort(reverse=True)
 
     log_dates = [i["date"] for i in logs]
